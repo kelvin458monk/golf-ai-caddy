@@ -1,0 +1,7 @@
+node_modules/
+.miniprogram/
+cloudfunctions/.miniprogram_npm/
+.env
+*.log
+.DS_Store
+Thumbs.db
