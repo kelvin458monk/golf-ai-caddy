@@ -12,12 +12,14 @@
   </view>
 
   <view wx:else class="page">
-    <!-- 顶部：球场 + 洞号 + 统计 -->
+    <!-- 顶部：洞号 + 球场 + 统计 -->
     <view class="top-bar">
       <view class="top-left">
         <text class="hole-num">H{{currentHole}}</text>
-        <text class="course">{{courseName}}</text>
-        <text class="par">标准杆{{holes[currentHole-1].par}}</text>
+        <view class="top-info">
+          <text class="course">{{courseName}}</text>
+          <text class="par">标准杆{{holes[currentHole-1].par}}</text>
+        </view>
       </view>
       <view class="top-right">
         <text class="stat">{{doneCount}}洞</text>
@@ -25,19 +27,21 @@
       </view>
     </view>
 
-    <!-- 18洞进度条 -->
+    <!-- 18洞进度条（显示标准杆+实际杆） -->
     <view class="holes-bar">
       <view class="row">
         <view wx:for="{{holes}}" wx:key="holeNumber" wx:if="{{item.holeNumber <= 9}}"
           class="hole {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'cur' : ''}}">
-          <text class="h">{{item.holeNumber}}</text>
+          <text class="h">H{{item.holeNumber}}</text>
+          <text class="p">P{{item.par}}</text>
           <text class="s">{{item.done ? item.strokes : '-'}}</text>
         </view>
       </view>
       <view class="row">
         <view wx:for="{{holes}}" wx:key="holeNumber" wx:if="{{item.holeNumber > 9}}"
           class="hole {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'cur' : ''}}">
-          <text class="h">{{item.holeNumber}}</text>
+          <text class="h">H{{item.holeNumber}}</text>
+          <text class="p">P{{item.par}}</text>
           <text class="s">{{item.done ? item.strokes : '-'}}</text>
         </view>
       </view>
@@ -55,12 +59,12 @@
         </view>
       </view>
 
-      <!-- 球杆 -->
+      <!-- 球杆（标签云） -->
       <view class="row-section">
-        <text class="label">球杆</text>
+        <text class="label">球杆 <text class="tip">（点选，可多选）</text></text>
         <view class="club-row">
           <view wx:for="{{clubOptions}}" wx:key="id" data-id="{{item.id}}" bindtap="toggleClub"
-            class="club-tag {{isClubSelected(item.id) ? 'sel' : ''}}">{{item.name}}</view>
+            class="club-tag {{clubSelectedMap[item.id] ? 'sel' : ''}}">{{item.name}}</view>
         </view>
       </view>
 
@@ -82,7 +86,7 @@
 
     <!-- 确认按钮 -->
     <button class="confirm-btn" bindtap="confirmHole">
-      {{currentHole >= 18 ? '完成' : '下一洞 →'}}
+      {{currentHole >= 18 ? '完成记录' : '下一洞 →'}}
     </button>
   </view>
 </view>

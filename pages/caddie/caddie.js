@@ -25,7 +25,7 @@ Page({
     currentHole: 1,
     totalHoles: 18,
     strokes: 4,
-    selectedClubs: '',
+    clubSelectedMap: {},
     putts: 2,
     note: '',
     holes: [],
@@ -89,21 +89,16 @@ Page({
     this.setData({ putts: val })
   },
 
-  // 球杆选择 - 用逗号分隔字符串
+  // 球杆选择 - 用对象存储
   toggleClub(e) {
     const clubId = e.currentTarget.dataset.id
-    let clubs = this.data.selectedClubs
-    if (clubs.includes(',' + clubId + ',')) {
-      clubs = clubs.replace(',' + clubId + ',', ',')
+    const map = { ...this.data.clubSelectedMap }
+    if (map[clubId]) {
+      delete map[clubId]
     } else {
-      clubs = clubs + clubId + ','
+      map[clubId] = true
     }
-    this.setData({ selectedClubs: clubs })
-  },
-
-  // 检查球杆是否已选
-  isClubSelected(clubId) {
-    return this.data.selectedClubs.includes(',' + clubId + ',')
+    this.setData({ clubSelectedMap: map })
   },
 
   // 备注
@@ -115,8 +110,8 @@ Page({
   confirmHole() {
     const idx = this.data.currentHole - 1
     const holes = [...this.data.holes]
-    const clubIds = this.data.selectedClubs.split(',').filter(Boolean)
-    const clubNames = clubIds.map(id => {
+    const selectedIds = Object.keys(this.data.clubSelectedMap)
+    const clubNames = selectedIds.map(id => {
       const c = CLUB_OPTIONS.find(c => c.id === id)
       return c ? c.name : ''
     })
@@ -144,7 +139,7 @@ Page({
       holes,
       currentHole: this.data.currentHole + 1,
       strokes: 4,
-      selectedClubs: '',
+      clubSelectedMap: {},
       putts: 2,
       note: '',
       doneCount,
