@@ -1,10 +1,8 @@
 // pages/index/index.js
-const util = require('../../utils/util')
-
 Page({
   data: {
     rounds: [],
-    loading: true,
+    loading: false,
     showEmpty: true
   },
 
@@ -17,14 +15,12 @@ Page({
   },
 
   loadData() {
-    // 加载历史球局
-    const storage = wx.getStorageSync('rounds') || []
-    const mockRounds = util.generateMockRounds()
-    const allRounds = [...storage, ...mockRounds]
+    // 从本地存储读取历史球局
+    const storage = wx.getStorageSync('completedRounds') || []
     this.setData({
-      rounds: allRounds,
+      rounds: storage,
       loading: false,
-      showEmpty: allRounds.length === 0
+      showEmpty: storage.length === 0
     })
   },
 

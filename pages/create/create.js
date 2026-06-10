@@ -1,10 +1,8 @@
 // pages/create/create.js
-// 球员端 - 开新球局，生成二维码供球童扫码
-const util = require('../../utils/util')
-
+// 球员端 - 开新球局，选择记录方式
 Page({
   data: {
-    step: 'select_course', // select_course | qr_code
+    step: 'select_course', // select_course | select_recorder | qr_code
     courses: [],
     selectedCourse: null,
     roomId: '',
@@ -28,15 +26,18 @@ Page({
     this.setData({ selectedCourse: course })
   },
 
-  // 确认选择并生成二维码
+  // 确认选择球场 → 进入选择记录方式
   confirmCourse() {
     if (!this.data.selectedCourse) {
       wx.showToast({ title: '请先选择球场', icon: 'none' })
       return
     }
-    this.setData({ saveLoading: true })
+    this.setData({ step: 'select_recorder' })
+  },
 
-    // 生成房间ID
+  // 球童扫码记录 → 生成二维码
+  useCaddie() {
+    this.setData({ saveLoading: true })
     const roomId = 'room_' + Date.now()
     const roomData = {
       roomId,
@@ -45,19 +46,37 @@ Page({
       playerName: this.data.playerName,
       createdAt: Date.now(),
       status: 'active',
-      holes: []
+      holes: [],
+      mode: 'caddie'
     }
-
-    // 保存到本地（实际存到云开发）
     wx.setStorageSync('currentRoom', roomData)
-
     setTimeout(() => {
-      this.setData({
-        roomId,
-        step: 'qr_code',
-        saveLoading: false
-      })
-    }, 500)
+      this.setData({ roomId, step: 'qr_code', saveLoading: false })
+    }, 300)
+  },
+
+  // 自己记录 → 跳转球童页面
+  useSelf() {
+    const roomId = 'room_' + Date.now()
+    const roomData = {
+      roomId,
+      courseId: this.data.selectedCourse.id,
+      courseName: this.data.selectedCourse.name,
+      playerName: this.data.playerName,
+      createdAt: Date.now(),
+      status: 'active',
+      holes: [],
+      mode: 'self'
+    }
+    wx.setStorageSync('currentRoom', roomData)
+    wx.navigateTo({
+      url: `/pages/caddie/caddie?roomId=${roomId}&course=${encodeURIComponent(this.data.selectedCourse.name)}`
+    })
+  },
+
+  // 返回上一步
+  backToSelect() {
+    this.setData({ step: 'select_course' })
   },
 
   // 复制房间码
@@ -68,6 +87,11 @@ Page({
         wx.showToast({ title: '已复制', icon: 'success' })
       }
     })
+  },
+
+  // 查看报告
+  goReport() {
+    wx.navigateTo({ url: '/pages/report/report' })
   },
 
   // 重新选择

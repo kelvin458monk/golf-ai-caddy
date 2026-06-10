@@ -72,8 +72,66 @@
   text-align: center;
 }
 
-.btn-primary:active {
-  opacity: 0.85;
+.btn-primary:active { opacity: 0.85; }
+
+.btn-secondary {
+  background: #F5F5F5;
+  color: #666;
+  border-radius: 50rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  border: none;
+  text-align: center;
+}
+
+.btn-secondary:active { opacity: 0.85; }
+
+.btn-back {
+  margin: 20rpx 24rpx;
+  background: none;
+  color: #999;
+  font-size: 26rpx;
+  border: none;
+  text-align: center;
+}
+
+/* 记录方式选择 */
+.choice-list {
+  padding: 0 24rpx;
+}
+
+.choice-card {
+  padding: 40rpx 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.choice-card:active {
+  background: #F8FFF9;
+  transform: scale(0.98);
+}
+
+.choice-icon {
+  font-size: 60rpx;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.choice-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.choice-desc {
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+  display: block;
 }
 
 /* 二维码页 */
@@ -124,7 +182,6 @@
   display: block;
 }
 
-/* 提示 */
 .qr-tips {
   padding: 0 40rpx;
   margin-bottom: 30rpx;
@@ -137,25 +194,11 @@
   margin-bottom: 12rpx;
 }
 
-/* 操作按钮 */
 .qr-actions {
   display: flex;
   gap: 20rpx;
   padding: 0 24rpx;
 }
 
-.btn-secondary {
-  flex: 1;
-  background: #F5F5F5;
-  color: #666;
-  border-radius: 50rpx;
-  padding: 24rpx;
-  font-size: 28rpx;
-  border: none;
-  text-align: center;
-}
-
-.qr-actions .btn-primary {
-  flex: 2;
-  margin: 0;
-}
+.qr-actions .btn-secondary { flex: 1; }
+.qr-actions .btn-primary { flex: 2; }

@@ -24,19 +24,39 @@
       </view>
     </view>
 
-    <button class="btn-primary" bindtap="confirmCourse" loading="{{saveLoading}}">
-      生成二维码
-    </button>
+    <button class="btn-primary" bindtap="confirmCourse">下一步</button>
   </view>
 
-  <!-- 步骤2：二维码 -->
+  <!-- 步骤2：选择记录方式 -->
+  <view wx:elif="{{step === 'select_recorder'}}" class="step-panel">
+    <view class="step-header">
+      <text class="step-title">📝 谁来记录？</text>
+      <text class="step-desc">{{selectedCourse.name}}</text>
+    </view>
+
+    <view class="choice-list">
+      <view class="choice-card card" bindtap="useCaddie">
+        <text class="choice-icon">🏌️</text>
+        <text class="choice-title">球童扫码记录</text>
+        <text class="choice-desc">生成二维码，让球童扫码后帮你记录</text>
+      </view>
+      <view class="choice-card card" bindtap="useSelf">
+        <text class="choice-icon">🎯</text>
+        <text class="choice-title">我自己记录</text>
+        <text class="choice-desc">直接开始记录成绩</text>
+      </view>
+    </view>
+
+    <button class="btn-back" bindtap="backToSelect">返回选择球场</button>
+  </view>
+
+  <!-- 步骤3：二维码 -->
   <view wx:elif="{{step === 'qr_code'}}" class="step-panel">
     <view class="qr-header">
       <text class="qr-title">⛳ 球局已开启</text>
       <text class="qr-course">{{selectedCourse.name}}</text>
     </view>
 
-    <!-- 模拟二维码 -->
     <view class="qr-area card">
       <view class="qr-box">
         <text class="qr-hint">让球童扫码</text>
