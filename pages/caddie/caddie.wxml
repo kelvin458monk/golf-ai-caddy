@@ -29,7 +29,7 @@
         <view class="hole-badge">H{{currentHole}}</view>
         <view class="course-info">
           <text class="course-name">{{courseName}}</text>
-          <text class="hole-progress">第 {{currentHole}} / {{totalHoles}} 洞</text>
+          <text class="hole-progress">第 {{currentHole}} / {{totalHoles}} 洞 · 标准杆{{holes[currentHole-1].par}}</text>
         </view>
       </view>
       <view class="header-right">
@@ -58,7 +58,7 @@
           wx:if="{{item.holeNumber <= 9}}"
           class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
         >
-          <text class="hole-num">{{item.holeNumber}}</text>
+          <text class="hole-num">H{{item.holeNumber}}</text>
           <text class="hole-par">P{{item.par}}</text>
           <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
         </view>
@@ -71,7 +71,7 @@
           wx:if="{{item.holeNumber > 9}}"
           class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
         >
-          <text class="hole-num">{{item.holeNumber}}</text>
+          <text class="hole-num">H{{item.holeNumber}}</text>
           <text class="hole-par">P{{item.par}}</text>
           <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
         </view>
@@ -97,17 +97,22 @@
       </view>
     </view>
 
-    <!-- 球杆选择（多选） -->
+    <!-- 球杆选择（两列多选） -->
     <view class="input-section card">
       <text class="section-title">使用球杆 <text class="section-hint">（可多选）</text></text>
-      <view class="club-grid">
+      <view class="club-list">
         <view 
           wx:for="{{clubOptions}}" 
           wx:key="id"
-          class="club-btn {{selectedClubs.indexOf(item.id) >= 0 ? 'active' : ''}}"
+          class="club-item {{selectedClubs.indexOf(item.id) >= 0 ? 'selected' : ''}}"
           data-id="{{item.id}}"
           bindtap="toggleClub"
-        >{{item.name}}</view>
+        >
+          <view class="club-check">
+            <text wx:if="{{selectedClubs.indexOf(item.id) >= 0}}">✓</text>
+          </view>
+          <text class="club-name">{{item.name}}</text>
+        </view>
       </view>
     </view>
 

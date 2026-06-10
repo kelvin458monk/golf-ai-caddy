@@ -45,6 +45,13 @@ Page({
   onLoad(options) {
     const roomId = options.roomId || ''
     const courseName = options.course || ''
+    let coursePars = null
+    
+    if (options.pars) {
+      try {
+        coursePars = JSON.parse(decodeURIComponent(options.pars))
+      } catch (e) {}
+    }
     
     if (!roomId) {
       wx.showToast({ title: '无效的二维码', icon: 'none' })
@@ -57,16 +64,19 @@ Page({
       courseName: courseName ? decodeURIComponent(courseName) : '未知球场'
     })
     
-    this.initHoles()
+    this.initHoles(coursePars)
     this.loadRoomData()
   },
 
-  initHoles() {
+  initHoles(coursePars) {
     const holes = []
+    // 前9洞标准杆（从create传入），后9洞默认4
+    const defaultPars = [4,4,4,4,4,4,4,4,4]
     for (let i = 0; i < 18; i++) {
+      const par = coursePars && coursePars[i] ? coursePars[i] : defaultPars[i]
       holes.push({
         holeNumber: i + 1,
-        par: 4,
+        par,
         strokes: 0,
         clubs: [],
         putts: 0,

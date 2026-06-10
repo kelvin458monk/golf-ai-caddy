@@ -69,8 +69,10 @@ Page({
       mode: 'self'
     }
     wx.setStorageSync('currentRoom', roomData)
+    // 把前9洞标准杆也传过去
+    const pars = this.data.selectedCourse.pars
     wx.navigateTo({
-      url: `/pages/caddie/caddie?roomId=${roomId}&course=${encodeURIComponent(this.data.selectedCourse.name)}`
+      url: `/pages/caddie/caddie?roomId=${roomId}&course=${encodeURIComponent(this.data.selectedCourse.name)}&pars=${encodeURIComponent(JSON.stringify(pars))}`
     })
   },
 

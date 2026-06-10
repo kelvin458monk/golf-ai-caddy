@@ -208,27 +208,50 @@
   color: #FFF;
 }
 
-/* 球杆多选 - 修复点击问题 */
-.club-grid {
+/* 球杆选择 - 两列列表（修复点击） */
+.club-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 12rpx;
 }
 
-.club-btn {
-  padding: 16rpx 28rpx;
-  font-size: 26rpx;
-  color: #666;
-  background: #F5F5F5;
-  border-radius: 30rpx;
-  border: 2rpx solid #E0E0E0;
-  display: inline-block;
+.club-item {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #F0F0F0;
 }
 
-.club-btn.active {
-  background: #1B8A6B;
+.club-item:nth-child(odd) {
+  padding-right: 20rpx;
+}
+
+.club-item:nth-child(even) {
+  padding-left: 20rpx;
+  border-left: 1rpx solid #F0F0F0;
+}
+
+.club-check {
+  width: 44rpx;
+  height: 44rpx;
+  border: 2rpx solid #DDD;
+  border-radius: 8rpx;
+  text-align: center;
+  line-height: 44rpx;
+  font-size: 24rpx;
   color: #FFF;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.club-item.selected .club-check {
+  background: #1B8A6B;
   border-color: #1B8A6B;
+}
+
+.club-name {
+  font-size: 28rpx;
+  color: #333;
 }
 
 /* 推杆数 */
