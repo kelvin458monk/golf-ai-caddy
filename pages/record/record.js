@@ -36,7 +36,7 @@ Page({
         inputted: false
       })
     }
-    this.setData({ holes })
+    this.setData({ holes, inputCount: 0 })
   },
 
   // 选择球场
@@ -77,6 +77,7 @@ Page({
   confirmHole() {
     const index = this.data.currentHoleIndex
     const holes = [...this.data.holes]
+    const inputCount = (holes.filter(h => h.inputted).length || this.data.inputCount) + 1
     holes[index] = {
       ...holes[index],
       par: this.data.parForCurrentHole,
@@ -85,7 +86,6 @@ Page({
     }
 
     if (index >= 17) {
-      // 最后一洞已输入，跳转预览
       this.calcTotals(holes)
       return
     }
@@ -95,7 +95,8 @@ Page({
       holes,
       currentHoleIndex: nextIndex,
       parForCurrentHole: 4,
-      strokeInput: 4
+      strokeInput: 4,
+      inputCount
     })
   },
 
@@ -130,17 +131,18 @@ Page({
 
   // 返回修改
   goBackEdit() {
-    // 找到最后一个已输入的洞
     const holes = this.data.holes
     let lastIndex = 0
     for (let i = 0; i < 18; i++) {
       if (holes[i].inputted) lastIndex = i
     }
+    const inputCount = holes.filter(h => h.inputted).length
     this.setData({
       step: 'input_score',
       currentHoleIndex: lastIndex,
       parForCurrentHole: holes[lastIndex].par,
-      strokeInput: holes[lastIndex].strokes
+      strokeInput: holes[lastIndex].strokes,
+      inputCount
     })
   },
 

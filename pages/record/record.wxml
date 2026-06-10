@@ -37,6 +37,7 @@
         class="progress-dot {{item.inputted ? 'done' : ''}} {{currentHoleIndex === index ? 'active' : ''}}"
         bindtap="jumpToHole"
         data-index="{{index}}"
+        style="width:14rpx;height:14rpx;"
       >
       </view>
     </view>
@@ -132,7 +133,7 @@
 
   <!-- 底部已输入统计 -->
   <view wx:if="{{step === 'input_score'}}" class="bottom-bar">
-    <text>已输入 {{holes.filter(h => h.inputted).length}}/18 洞</text>
+    <text>已输入 {{inputCount}}/18 洞</text>
     <button class="btn-primary small" bindtap="confirmHole">直接完成</button>
   </view>
 </view>

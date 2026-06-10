@@ -54,7 +54,7 @@
           <view class="holes-row">
             <text class="hole-cell hole-label">杆</text>
             <text wx:for="{{round.holes.slice(0,9)}}" wx:key="hole" 
-              class="hole-cell {{getHoleStyle(item.strokes, item.par)}}">{{item.strokes}}</text>
+              class="hole-cell {{item.strokes - item.par <= -2 ? 'eagle' : item.strokes - item.par === -1 ? 'birdie' : item.strokes - item.par === 0 ? 'par' : item.strokes - item.par === 1 ? 'bogey' : item.strokes - item.par === 2 ? 'double-bogey' : 'other'}}">{{item.strokes}}</text>
           </view>
         </view>
 
@@ -71,7 +71,7 @@
           <view class="holes-row">
             <text class="hole-cell hole-label">杆</text>
             <text wx:for="{{round.holes.slice(9,18)}}" wx:key="hole" 
-              class="hole-cell {{getHoleStyle(item.strokes, item.par)}}">{{item.strokes}}</text>
+              class="hole-cell {{item.strokes - item.par <= -2 ? 'eagle' : item.strokes - item.par === -1 ? 'birdie' : item.strokes - item.par === 0 ? 'par' : item.strokes - item.par === 1 ? 'bogey' : item.strokes - item.par === 2 ? 'double-bogey' : 'other'}}">{{item.strokes}}</text>
           </view>
         </view>
 
