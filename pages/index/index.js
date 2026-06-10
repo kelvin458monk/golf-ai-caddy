@@ -5,63 +5,42 @@ Page({
   data: {
     rounds: [],
     loading: true,
-    showEmpty: false
+    showEmpty: true
   },
 
   onLoad() {
-    this.loadRounds()
+    this.loadData()
   },
 
   onShow() {
-    // 从记录页返回时刷新数据
-    if (this.data.rounds.length > 0) {
-      this.loadRounds()
-    }
+    this.loadData()
   },
 
-  loadRounds() {
-    const app = getApp()
-    if (app.globalData.hasLogin) {
-      this.loadFromCloud()
-    } else {
-      this.loadMockData()
-    }
-  },
-
-  // 从云数据库加载（后续接入）
-  loadFromCloud() {
-    // TODO: 接入云数据库后实现
-    this.loadMockData()
-  },
-
-  // 开发阶段使用模拟数据
-  loadMockData() {
-    const rounds = util.generateMockRounds()
+  loadData() {
+    // 加载历史球局
+    const storage = wx.getStorageSync('rounds') || []
+    const mockRounds = util.generateMockRounds()
+    const allRounds = [...storage, ...mockRounds]
     this.setData({
-      rounds,
+      rounds: allRounds,
       loading: false,
-      showEmpty: rounds.length === 0
+      showEmpty: allRounds.length === 0
     })
   },
 
-  // 点击比赛进入详情
-  goDetail(e) {
+  // 开新球局
+  goCreate() {
+    wx.switchTab({ url: '/pages/create/create' })
+  },
+
+  // 查看报告
+  goReport(e) {
     const id = e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: `/pages/detail/detail?id=${id}`
-    })
+    wx.navigateTo({ url: `/pages/report/report?id=${id}` })
   },
 
-  // 新建比赛记录
-  newRound() {
-    wx.switchTab({
-      url: '/pages/record/record'
-    })
-  },
-
-  // 下拉刷新
   onPullDownRefresh() {
-    this.loadRounds()
+    this.loadData()
     wx.stopPullDownRefresh()
   }
 })

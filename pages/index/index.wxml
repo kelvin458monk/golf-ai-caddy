@@ -1,12 +1,11 @@
 <!-- pages/index/index.wxml -->
-<wxs src="../../utils/util.wxs" module="u" />
-
 <view class="container">
-  <!-- 头部英雄区 -->
+
+  <!-- 英雄区 -->
   <view class="hero">
-    <text class="hero-title">⛳ 我的战绩</text>
-    <text class="hero-subtitle">记录每一杆，提升每一步</text>
-    <button class="hero-btn" bindtap="newRound">+ 记录新成绩</button>
+    <text class="hero-title">⛳ 高尔夫AI助手</text>
+    <text class="hero-subtitle">球童扫码记录 · AI赛后分析</text>
+    <button class="hero-btn" bindtap="goCreate">🏌️ 开新球局</button>
   </view>
 
   <!-- 加载中 -->
@@ -18,40 +17,44 @@
   <view wx:elif="{{showEmpty}}" class="empty-state">
     <text class="empty-icon">🏌️</text>
     <text>还没有比赛记录</text>
-    <text class="text-small text-gray">点击"记录新成绩"开始</text>
+    <text class="empty-tip">点击"开新球局"开始记录</text>
   </view>
 
-  <!-- 比赛列表 -->
-  <view wx:else class="round-list">
-    <view 
-      wx:for="{{rounds}}" 
-      wx:key="id" 
-      class="round-card card"
-      bindtap="goDetail"
-      data-id="{{item.id}}"
-    >
-      <view class="round-header">
-        <text class="round-course">{{item.courseName}}</text>
-        <text class="round-date">{{item.date}}</text>
-      </view>
-      <view class="round-body">
-        <view class="round-stats">
-          <text class="stat-value {{item.totalStrokes <= item.par ? 'text-green' : ''}}">
-            {{item.totalStrokes}}
-          </text>
-          <text class="stat-label">总杆</text>
+  <!-- 历史记录 -->
+  <view wx:else class="rounds-section">
+    <view class="section-header">
+      <text class="section-title">历史球局</text>
+    </view>
+    <view class="round-list">
+      <view 
+        wx:for="{{rounds}}" 
+        wx:key="id" 
+        class="round-card card"
+        bindtap="goReport"
+        data-id="{{item.id}}"
+      >
+        <view class="round-header">
+          <text class="round-course">{{item.courseName}}</text>
+          <text class="round-date">{{item.date}}</text>
         </view>
         <view class="round-stats">
-          <text class="stat-value">{{item.par}}</text>
-          <text class="stat-label">标准杆</text>
-        </view>
-        <view class="round-stats">
-          <text class="stat-value {{item.totalStrokes > item.par ? 'text-danger' : 'text-green'}}">
-            {{u.calcParDiff(item.totalStrokes, item.par)}}
-          </text>
-          <text class="stat-label">成绩</text>
+          <view class="stat-item">
+            <text class="stat-val {{item.totalStrokes <= item.par ? 'text-green' : ''}}">{{item.totalStrokes}}</text>
+            <text class="stat-label">总杆</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-val">{{item.par}}</text>
+            <text class="stat-label">标准杆</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-val {{item.totalStrokes > item.par ? 'text-danger' : 'text-green'}}">
+              {{item.totalStrokes > item.par ? '+' : ''}}{{item.totalStrokes - item.par}}
+            </text>
+            <text class="stat-label">成绩</text>
+          </view>
         </view>
       </view>
     </view>
   </view>
+
 </view>

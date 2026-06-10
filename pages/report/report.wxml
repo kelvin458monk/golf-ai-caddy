@@ -1,0 +1,100 @@
+<!-- pages/report/report.wxml -->
+<view class="container">
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:else class="report-page">
+    <!-- 成绩摘要 -->
+    <view class="hero-summary">
+      <text class="hero-course">{{round.courseName}}</text>
+      <text class="hero-date">{{round.date}}</text>
+      <view class="score-display">
+        <text class="score-main {{round.totalStrokes <= round.totalPar ? 'text-green' : 'text-danger'}}">
+          {{round.totalStrokes}}
+        </text>
+        <text class="score-label">总杆</text>
+      </view>
+      <view class="score-compare">
+        <text class="compare-item">标准杆 {{round.totalPar}}</text>
+        <text class="compare-item {{round.totalStrokes > round.totalPar ? 'text-danger' : 'text-green'}}">
+          {{round.totalStrokes > round.totalPar ? '+' : ''}}{{round.totalStrokes - round.totalPar}}杆
+        </text>
+      </view>
+    </view>
+
+    <!-- 每洞成绩 -->
+    <view class="card holes-card">
+      <text class="card-title">每洞成绩</text>
+      <view class="holes-grid">
+        <view 
+          wx:for="{{round.holes}}" 
+          wx:key="holeNumber"
+          class="hole-cell {{getHoleClass(item.strokes, item.par)}}"
+        >
+          <text class="h-num">H{{item.holeNumber}}</text>
+          <text class="h-strokes">{{item.strokes}}</text>
+          <text class="h-label">{{getHoleLabel(item.strokes, item.par)}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 球杆使用统计 -->
+    <view class="card clubs-card">
+      <text class="card-title">球杆使用</text>
+      <view class="club-stat">
+        <text class="stat-label">记录洞数</text>
+        <text class="stat-value">{{round.holes.length}}</text>
+      </view>
+      <view class="club-stat">
+        <text class="stat-label">总推杆数</text>
+        <text class="stat-value">{{round.holes.reduce((s,h) => s + h.putts, 0)}}</text>
+      </view>
+      <view class="club-stat">
+        <text class="stat-label">平均推杆</text>
+        <text class="stat-value">{{(round.holes.reduce((s,h) => s + h.putts, 0) / round.holes.length).toFixed(1)}}</text>
+      </view>
+    </view>
+
+    <!-- AI分析 -->
+    <view class="card ai-card">
+      <view class="card-title">
+        🤖 AI分析报告
+      </view>
+
+      <button 
+        wx:if="{{!showAnalysis}}" 
+        class="analysis-btn"
+        bindtap="getAnalysis"
+        loading="{{analysisLoading}}"
+      >
+        {{analysisLoading ? '分析中...' : '生成AI报告'}}
+      </button>
+
+      <view wx:if="{{showAnalysis && analysis}}" class="analysis-body">
+        <view class="analysis-item">
+          <text class="a-label">📊 成绩总结</text>
+          <text class="a-text">{{analysis.summary}}</text>
+        </view>
+        <view class="analysis-item">
+          <text class="a-label">✅ 优势洞型</text>
+          <text class="a-text">{{analysis.strengths}}</text>
+        </view>
+        <view class="analysis-item">
+          <text class="a-label">⚠️ 待提升</text>
+          <text class="a-text">{{analysis.improvements}}</text>
+        </view>
+        <view class="analysis-item">
+          <text class="a-label">💡 练习建议</text>
+          <text class="a-text">{{analysis.suggestions}}</text>
+        </view>
+      </view>
+
+      <view wx:if="{{!showAnalysis}}" class="ai-placeholder">
+        <text>点击生成AI报告，基于您的成绩数据获得个性化分析</text>
+      </view>
+    </view>
+  </view>
+</view>

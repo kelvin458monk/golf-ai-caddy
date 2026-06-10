@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/record/record",
-    "pages/detail/detail",
+    "pages/create/create",
+    "pages/report/report",
+    "pages/caddie/caddie",
     "pages/mine/mine"
   ],
   "window": {
@@ -25,8 +26,8 @@
         "selectedIconPath": "images/home_active.png"
       },
       {
-        "pagePath": "pages/record/record",
-        "text": "记录",
+        "pagePath": "pages/create/create",
+        "text": "开球局",
         "iconPath": "images/record.png",
         "selectedIconPath": "images/record_active.png"
       },

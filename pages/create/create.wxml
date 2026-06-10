@@ -1,0 +1,59 @@
+<!-- pages/create/create.wxml -->
+<view class="container">
+
+  <!-- 步骤1：选择球场 -->
+  <view wx:if="{{step === 'select_course'}}" class="step-panel">
+    <view class="step-header">
+      <text class="step-title">🏌️ 开新球局</text>
+      <text class="step-desc">选择今天打球的球场</text>
+    </view>
+
+    <view class="course-list">
+      <view 
+        wx:for="{{courses}}" 
+        wx:key="id"
+        class="course-card card {{selectedCourse && selectedCourse.id === item.id ? 'selected' : ''}}"
+        bindtap="selectCourse"
+        data-id="{{item.id}}"
+      >
+        <view class="course-info">
+          <text class="course-name">{{item.name}}</text>
+          <text class="course-detail">{{item.holes}}洞 · 标准杆{{item.par}}</text>
+        </view>
+        <view wx:if="{{selectedCourse && selectedCourse.id === item.id}}" class="check-icon">✓</view>
+      </view>
+    </view>
+
+    <button class="btn-primary" bindtap="confirmCourse" loading="{{saveLoading}}">
+      生成二维码
+    </button>
+  </view>
+
+  <!-- 步骤2：二维码 -->
+  <view wx:elif="{{step === 'qr_code'}}" class="step-panel">
+    <view class="qr-header">
+      <text class="qr-title">⛳ 球局已开启</text>
+      <text class="qr-course">{{selectedCourse.name}}</text>
+    </view>
+
+    <!-- 模拟二维码 -->
+    <view class="qr-area card">
+      <view class="qr-box">
+        <text class="qr-hint">让球童扫码</text>
+        <text class="qr-roomid">{{roomId}}</text>
+      </view>
+    </view>
+
+    <view class="qr-tips">
+      <text class="tip-item">📱 球童打开微信扫一扫</text>
+      <text class="tip-item">📝 扫码后直接记录成绩</text>
+      <text class="tip-item">✅ 完成后您可扫码查看报告</text>
+    </view>
+
+    <view class="qr-actions">
+      <button class="btn-secondary" bindtap="reselect">重新选择</button>
+      <button class="btn-primary" bindtap="goReport">查看报告</button>
+    </view>
+  </view>
+
+</view>

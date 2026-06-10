@@ -1,0 +1,203 @@
+/* pages/report/report.wxss */
+
+.loading {
+  text-align: center;
+  padding: 200rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 英雄区 */
+.hero-summary {
+  background: linear-gradient(135deg, #1B8A6B 0%, #2ECC71 100%);
+  padding: 50rpx 30rpx 60rpx;
+  text-align: center;
+  border-radius: 0 0 40rpx 40rpx;
+}
+
+.hero-course {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #FFF;
+  display: block;
+}
+
+.hero-date {
+  font-size: 24rpx;
+  color: rgba(255,255,255,0.8);
+  display: block;
+  margin-top: 6rpx;
+}
+
+.score-display {
+  margin-top: 30rpx;
+}
+
+.score-main {
+  font-size: 96rpx;
+  font-weight: 800;
+  color: #FFF;
+  display: block;
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 26rpx;
+  color: rgba(255,255,255,0.8);
+  display: block;
+  margin-top: 8rpx;
+}
+
+.score-compare {
+  display: flex;
+  justify-content: center;
+  gap: 40rpx;
+  margin-top: 20rpx;
+}
+
+.compare-item {
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.9);
+}
+
+/* 每洞成绩 */
+.holes-card {
+  margin: 20rpx 24rpx;
+  padding: 24rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.holes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.hole-cell {
+  width: calc(100% / 6 - 10rpx);
+  text-align: center;
+  padding: 14rpx 0;
+  background: #F9F9F9;
+  border-radius: 10rpx;
+}
+
+.h-num {
+  font-size: 18rpx;
+  color: #999;
+  display: block;
+}
+
+.h-strokes {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #333;
+  display: block;
+  margin: 4rpx 0;
+}
+
+.h-label {
+  font-size: 16rpx;
+  display: block;
+}
+
+/* 颜色 */
+.eagle { background: #FFF9E6; }
+.eagle .h-strokes { color: #D4A000; }
+.birdie { background: #E8F5E9; }
+.birdie .h-strokes { color: #1B8A6B; }
+.par { background: #EBF5FF; }
+.par .h-strokes { color: #3498DB; }
+.bogey { background: #FFF4E6; }
+.bogey .h-strokes { color: #E67E22; }
+.double { background: #FFEBEB; }
+.double .h-strokes { color: #E74C3C; }
+.other { background: #FFEBEB; }
+.other .h-strokes { color: #C0392B; }
+
+/* 球杆统计 */
+.clubs-card {
+  margin: 0 24rpx 20rpx;
+  padding: 24rpx;
+}
+
+.club-stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.club-stat:last-child {
+  border-bottom: none;
+}
+
+.stat-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.stat-value {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+/* AI分析 */
+.ai-card {
+  margin: 0 24rpx 40rpx;
+  padding: 24rpx;
+}
+
+.analysis-btn {
+  background: linear-gradient(135deg, #1B8A6B, #2ECC71);
+  color: #FFF;
+  border-radius: 50rpx;
+  padding: 24rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  border: none;
+}
+
+.analysis-btn:active {
+  opacity: 0.85;
+}
+
+.ai-placeholder {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #CCC;
+  font-size: 26rpx;
+}
+
+.analysis-body {
+  margin-top: 16rpx;
+}
+
+.analysis-item {
+  margin-bottom: 16rpx;
+  padding: 18rpx;
+  background: #F8FFF9;
+  border-radius: 12rpx;
+}
+
+.a-label {
+  font-size: 26rpx;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.a-text {
+  font-size: 26rpx;
+  color: #555;
+  line-height: 1.6;
+}
+
+.text-green { color: #1B8A6B; }
+.text-danger { color: #E74C3C; }
