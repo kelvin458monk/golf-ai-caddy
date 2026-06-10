@@ -50,11 +50,11 @@
       </view>
       <view class="club-stat">
         <text class="stat-label">总推杆数</text>
-        <text class="stat-value">{{round.holes.reduce((s,h) => s + h.putts, 0)}}</text>
+        <text class="stat-value">{{round.totalPutts}}</text>
       </view>
       <view class="club-stat">
         <text class="stat-label">平均推杆</text>
-        <text class="stat-value">{{(round.holes.reduce((s,h) => s + h.putts, 0) / round.holes.length).toFixed(1)}}</text>
+        <text class="stat-value">{{round.avgPutts}}</text>
       </view>
     </view>
 

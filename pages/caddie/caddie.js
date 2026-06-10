@@ -35,6 +35,7 @@ Page({
     // 全部记录
     holes: [],
     isCompleted: false,
+    totalStrokes: 0,
     loading: true,
     // 球杆选项
     clubOptions: CLUB_OPTIONS
@@ -147,7 +148,8 @@ Page({
 
     if (this.data.currentHole >= 18) {
       // 完成
-      this.setData({ holes, isCompleted: true })
+      const totalStrokes = holes.reduce((s, h) => s + h.strokes, 0)
+      this.setData({ holes, isCompleted: true, totalStrokes })
       this.saveToCloud()
       return
     }
@@ -179,7 +181,7 @@ Page({
   viewRecord() {
     wx.showModal({
       title: '已完成记录',
-      content: `共18洞，总杆：${this.data.holes.reduce((s, h) => s + h.strokes, 0)}`,
+      content: `共18洞，总杆：${this.data.totalStrokes}`,
       showCancel: false
     })
   }

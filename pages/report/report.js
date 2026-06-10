@@ -29,13 +29,19 @@ Page({
       })
     }
 
+    const totalStrokes = mockHoles.reduce((s, h) => s + h.strokes, 0)
+    const totalPar = mockHoles.reduce((s, h) => s + h.par, 0)
+    const totalPutts = mockHoles.reduce((s, h) => s + h.putts, 0)
+
     const round = {
       roomId: 'room_demo',
       courseName: '观澜湖球会',
       date: util.formatDate(new Date()),
       holes: mockHoles,
-      totalStrokes: mockHoles.reduce((s, h) => s + h.strokes, 0),
-      totalPar: mockHoles.reduce((s, h) => s + h.par, 0)
+      totalStrokes,
+      totalPar,
+      totalPutts,
+      avgPutts: (totalPutts / mockHoles.length).toFixed(1)
     }
 
     this.setData({ round, loading: false })

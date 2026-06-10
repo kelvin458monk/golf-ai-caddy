@@ -14,7 +14,7 @@
     <text class="completed-sub">球员可扫码查看成绩报告</text>
     <view class="summary-card card">
       <text class="card-title">本场成绩</text>
-      <text class="total-score">{{holes.reduce((s,h)=>s+h.strokes,0)}}</text>
+      <text class="total-score">{{totalStrokes}}</text>
       <text class="total-label">总杆</text>
     </view>
     <button class="btn-primary" bindtap="viewRecord">查看详细记录</button>
