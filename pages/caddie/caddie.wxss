@@ -49,7 +49,7 @@
 
 .header-right {
   display: flex;
-  gap: 20rpx;
+  gap: 16rpx;
 }
 
 .live-stat {
@@ -92,7 +92,7 @@
 .hole-item {
   flex: 1;
   text-align: center;
-  padding: 12rpx 0;
+  padding: 10rpx 0;
   background: #F5F5F5;
   border-radius: 8rpx;
   border: 2rpx solid transparent;
@@ -113,9 +113,15 @@
   display: block;
 }
 
+.hole-par {
+  font-size: 18rpx;
+  color: #666;
+  display: block;
+}
+
 .hole-score {
-  font-size: 26rpx;
-  font-weight: 600;
+  font-size: 28rpx;
+  font-weight: 700;
   color: #333;
   display: block;
 }
@@ -202,7 +208,7 @@
   color: #FFF;
 }
 
-/* 球杆多选 */
+/* 球杆多选 - 修复点击问题 */
 .club-grid {
   display: flex;
   flex-wrap: wrap;
@@ -210,17 +216,18 @@
 }
 
 .club-btn {
-  padding: 16rpx 24rpx;
+  padding: 16rpx 28rpx;
   font-size: 26rpx;
   color: #666;
   background: #F5F5F5;
   border-radius: 30rpx;
-  border: 2rpx solid transparent;
+  border: 2rpx solid #E0E0E0;
+  display: inline-block;
 }
 
 .club-btn.active {
-  background: #E8F5E9;
-  color: #1B8A6B;
+  background: #1B8A6B;
+  color: #FFF;
   border-color: #1B8A6B;
 }
 
@@ -261,7 +268,9 @@
   border: none;
 }
 
-.btn-confirm:active { opacity: 0.85; }
+.btn-confirm:active {
+  opacity: 0.85;
+}
 
 /* 已完成页面 */
 .completed-page {

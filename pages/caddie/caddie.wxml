@@ -48,7 +48,7 @@
       </view>
     </view>
 
-    <!-- 18洞进度条 + 杆数显示 -->
+    <!-- 18洞概览（两排，显示标准杆+实际杆） -->
     <view class="holes-overview">
       <!-- 第1排：1-9洞 -->
       <view class="hole-row">
@@ -59,6 +59,7 @@
           class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
         >
           <text class="hole-num">{{item.holeNumber}}</text>
+          <text class="hole-par">P{{item.par}}</text>
           <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
         </view>
       </view>
@@ -71,6 +72,7 @@
           class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
         >
           <text class="hole-num">{{item.holeNumber}}</text>
+          <text class="hole-par">P{{item.par}}</text>
           <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
         </view>
       </view>
@@ -103,8 +105,8 @@
           wx:for="{{clubOptions}}" 
           wx:key="id"
           class="club-btn {{selectedClubs.indexOf(item.id) >= 0 ? 'active' : ''}}"
-          bindtap="toggleClub"
           data-id="{{item.id}}"
+          bindtap="toggleClub"
         >{{item.name}}</view>
       </view>
     </view>
