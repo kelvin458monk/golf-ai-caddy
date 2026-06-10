@@ -49,39 +49,39 @@
 
 .header-right {
   display: flex;
-  gap: 16rpx;
+  gap: 12rpx;
 }
 
 .live-stat {
   text-align: center;
   background: rgba(255,255,255,0.2);
-  padding: 12rpx 16rpx;
-  border-radius: 12rpx;
+  padding: 10rpx 14rpx;
+  border-radius: 10rpx;
 }
 
 .live-stat .stat-label {
-  font-size: 20rpx;
+  font-size: 18rpx;
   color: rgba(255,255,255,0.8);
   display: block;
 }
 
 .live-stat .stat-num {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 700;
   color: #FFF;
   display: block;
 }
 
-/* 18洞概览（两排） */
+/* 18洞概览 */
 .holes-overview {
-  padding: 16rpx 24rpx;
+  padding: 14rpx 24rpx;
   background: #FFF;
   border-bottom: 1rpx solid #F0F0F0;
 }
 
 .hole-row {
   display: flex;
-  gap: 8rpx;
+  gap: 6rpx;
   margin-bottom: 8rpx;
 }
 
@@ -92,7 +92,7 @@
 .hole-item {
   flex: 1;
   text-align: center;
-  padding: 10rpx 0;
+  padding: 8rpx 0;
   background: #F5F5F5;
   border-radius: 8rpx;
   border: 2rpx solid transparent;
@@ -108,19 +108,19 @@
 }
 
 .hole-num {
-  font-size: 18rpx;
+  font-size: 16rpx;
   color: #999;
   display: block;
 }
 
 .hole-par {
-  font-size: 18rpx;
-  color: #666;
+  font-size: 16rpx;
+  color: #888;
   display: block;
 }
 
 .hole-score {
-  font-size: 28rpx;
+  font-size: 26rpx;
   font-weight: 700;
   color: #333;
   display: block;
@@ -132,22 +132,21 @@
 
 /* 输入区域 */
 .input-section {
-  margin: 16rpx 24rpx;
-  padding: 24rpx;
+  margin: 14rpx 24rpx;
+  padding: 22rpx;
 }
 
 .section-title {
   font-size: 28rpx;
   font-weight: 600;
   color: #333;
-  display: block;
-  margin-bottom: 16rpx;
+  display: inline-block;
 }
 
 .section-hint {
   font-size: 22rpx;
   color: #999;
-  font-weight: 400;
+  margin-left: 10rpx;
 }
 
 /* 杆数输入 */
@@ -156,7 +155,7 @@
   justify-content: center;
   align-items: center;
   gap: 40rpx;
-  margin-bottom: 20rpx;
+  margin-bottom: 18rpx;
 }
 
 .stroke-btn {
@@ -189,18 +188,18 @@
 .quick-row {
   display: flex;
   justify-content: space-between;
-  gap: 12rpx;
+  gap: 10rpx;
 }
 
 .quick-btn {
   flex: 1;
-  padding: 16rpx 0;
+  padding: 14rpx 0;
   text-align: center;
   font-size: 28rpx;
   font-weight: 600;
   color: #666;
   background: #F5F5F5;
-  border-radius: 12rpx;
+  border-radius: 10rpx;
 }
 
 .quick-btn.active {
@@ -208,49 +207,41 @@
   color: #FFF;
 }
 
-/* 球杆选择 - 两列列表（修复点击） */
+/* 球杆选择 - 整行可点 */
 .club-list {
-  display: flex;
-  flex-wrap: wrap;
+  margin-top: 14rpx;
 }
 
-.club-item {
-  width: 50%;
+.club-row {
   display: flex;
   align-items: center;
-  padding: 18rpx 0;
+  padding: 20rpx 0;
   border-bottom: 1rpx solid #F0F0F0;
 }
 
-.club-item:nth-child(odd) {
-  padding-right: 20rpx;
-}
-
-.club-item:nth-child(even) {
-  padding-left: 20rpx;
-  border-left: 1rpx solid #F0F0F0;
+.club-row:last-child {
+  border-bottom: none;
 }
 
 .club-check {
-  width: 44rpx;
-  height: 44rpx;
+  width: 48rpx;
+  height: 48rpx;
   border: 2rpx solid #DDD;
-  border-radius: 8rpx;
+  border-radius: 10rpx;
   text-align: center;
-  line-height: 44rpx;
-  font-size: 24rpx;
+  line-height: 48rpx;
+  font-size: 26rpx;
   color: #FFF;
-  margin-right: 16rpx;
-  flex-shrink: 0;
+  margin-right: 20rpx;
 }
 
-.club-item.selected .club-check {
+.club-check.checked {
   background: #1B8A6B;
   border-color: #1B8A6B;
 }
 
 .club-name {
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #333;
 }
 
@@ -274,25 +265,22 @@
 .note-input {
   border: 1rpx solid #E0E0E0;
   border-radius: 12rpx;
-  padding: 20rpx;
+  padding: 18rpx;
   font-size: 28rpx;
   background: #FAFAFA;
+  margin-top: 10rpx;
 }
 
 /* 确认按钮 */
 .btn-confirm {
-  margin: 20rpx 24rpx 40rpx;
+  margin: 16rpx 24rpx 40rpx;
   background: linear-gradient(135deg, #1B8A6B, #2ECC71);
   color: #FFF;
   border-radius: 50rpx;
-  padding: 28rpx;
+  padding: 26rpx;
   font-size: 32rpx;
   font-weight: 600;
   border: none;
-}
-
-.btn-confirm:active {
-  opacity: 0.85;
 }
 
 /* 已完成页面 */
@@ -351,8 +339,8 @@
   background: linear-gradient(135deg, #1B8A6B, #2ECC71);
   color: #FFF;
   border-radius: 50rpx;
-  padding: 28rpx;
-  font-size: 32rpx;
+  padding: 26rpx;
+  font-size: 30rpx;
   font-weight: 600;
   border: none;
 }

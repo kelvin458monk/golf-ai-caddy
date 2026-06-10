@@ -1,15 +1,12 @@
 <!-- pages/caddie/caddie.wxml -->
-<!-- 球童端：扫码进入后使用的记录页面 -->
 <view class="container">
 
-  <!-- 加载中 -->
   <view wx:if="{{loading}}" class="loading">
     <text>加载中...</text>
   </view>
 
-  <!-- 已完成状态 -->
   <view wx:elif="{{isCompleted}}" class="completed-page">
-    <view class="completed-icon">✅</view>
+    <text class="completed-icon">✅</text>
     <text class="completed-title">记录完成！</text>
     <text class="completed-sub">球员可扫码查看成绩报告</text>
     <view class="summary-card card">
@@ -20,10 +17,9 @@
     <button class="btn-primary" bindtap="viewRecord">查看详细记录</button>
   </view>
 
-  <!-- 记录进行中 -->
   <view wx:else class="record-page">
 
-    <!-- 顶部：洞号 + 球场 + 实时统计 -->
+    <!-- 顶部信息 -->
     <view class="record-header">
       <view class="header-left">
         <view class="hole-badge">H{{currentHole}}</view>
@@ -48,33 +44,25 @@
       </view>
     </view>
 
-    <!-- 18洞概览（两排，显示标准杆+实际杆） -->
+    <!-- 18洞概览 -->
     <view class="holes-overview">
-      <!-- 第1排：1-9洞 -->
       <view class="hole-row">
-        <view 
-          wx:for="{{holes}}" 
-          wx:key="holeNumber"
-          wx:if="{{item.holeNumber <= 9}}"
-          class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
-        >
-          <text class="hole-num">H{{item.holeNumber}}</text>
-          <text class="hole-par">P{{item.par}}</text>
-          <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
-        </view>
+        <block wx:for="{{holes}}" wx:for-item="hole" wx:key="holeNumber" wx:if="{{hole.holeNumber <= 9}}">
+          <view class="hole-item {{hole.done ? 'done' : ''}} {{currentHole === hole.holeNumber ? 'current' : ''}}">
+            <text class="hole-num">H{{hole.holeNumber}}</text>
+            <text class="hole-par">P{{hole.par}}</text>
+            <text class="hole-score">{{hole.done ? hole.strokes : '-'}}</text>
+          </view>
+        </block>
       </view>
-      <!-- 第2排：10-18洞 -->
       <view class="hole-row">
-        <view 
-          wx:for="{{holes}}" 
-          wx:key="holeNumber"
-          wx:if="{{item.holeNumber > 9}}"
-          class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
-        >
-          <text class="hole-num">H{{item.holeNumber}}</text>
-          <text class="hole-par">P{{item.par}}</text>
-          <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
-        </view>
+        <block wx:for="{{holes}}" wx:for-item="hole" wx:key="holeNumber" wx:if="{{hole.holeNumber > 9}}">
+          <view class="hole-item {{hole.done ? 'done' : ''}} {{currentHole === hole.holeNumber ? 'current' : ''}}">
+            <text class="hole-num">H{{hole.holeNumber}}</text>
+            <text class="hole-par">P{{hole.par}}</text>
+            <text class="hole-score">{{hole.done ? hole.strokes : '-'}}</text>
+          </view>
+        </block>
       </view>
     </view>
 
@@ -82,37 +70,28 @@
     <view class="input-section card">
       <text class="section-title">杆数</text>
       <view class="stroke-row">
-        <view class="stroke-btn" bindtap="adjustStrokes" data-delta="-1">−</view>
+        <view class="stroke-btn" data-delta="-1" bindtap="adjustStrokes">−</view>
         <text class="stroke-num">{{strokes}}</text>
-        <view class="stroke-btn" bindtap="adjustStrokes" data-delta="1">+</view>
+        <view class="stroke-btn" data-delta="1" bindtap="adjustStrokes">+</view>
       </view>
       <view class="quick-row">
-        <view 
-          wx:for="{{[1,2,3,4,5,6,7,8,9]}}" 
-          wx:key="*this"
-          class="quick-btn {{strokes === item ? 'active' : ''}}"
-          bindtap="setStrokes"
-          data-val="{{item}}"
-        >{{item}}</view>
+        <view wx:for="{{[1,2,3,4,5,6,7,8,9]}}" wx:key="*this" data-val="{{item}}" bindtap="adjustStrokes" class="quick-btn {{strokes === item ? 'active' : ''}}">{{item}}</view>
       </view>
     </view>
 
-    <!-- 球杆选择（两列多选） -->
+    <!-- 球杆选择 -->
     <view class="input-section card">
-      <text class="section-title">使用球杆 <text class="section-hint">（可多选）</text></text>
+      <text class="section-title">使用球杆</text>
+      <text class="section-hint">（可多选）</text>
       <view class="club-list">
-        <view 
-          wx:for="{{clubOptions}}" 
-          wx:key="id"
-          class="club-item {{selectedClubs.indexOf(item.id) >= 0 ? 'selected' : ''}}"
-          data-id="{{item.id}}"
-          bindtap="toggleClub"
-        >
-          <view class="club-check">
-            <text wx:if="{{selectedClubs.indexOf(item.id) >= 0}}">✓</text>
+        <block wx:for="{{clubOptions}}" wx:key="id">
+          <view class="club-row" data-id="{{item.id}}" bindtap="toggleClub">
+            <view class="club-check {{selectedClubs.indexOf(item.id) >= 0 ? 'checked' : ''}}">
+              <text wx:if="{{selectedClubs.indexOf(item.id) >= 0}}">✓</text>
+            </view>
+            <text class="club-name">{{item.name}}</text>
           </view>
-          <text class="club-name">{{item.name}}</text>
-        </view>
+        </block>
       </view>
     </view>
 
@@ -120,26 +99,19 @@
     <view class="input-section card">
       <text class="section-title">推杆数</text>
       <view class="putt-row">
-        <view class="stroke-btn small" bindtap="adjustPutts" data-delta="-1">−</view>
+        <view class="stroke-btn small" data-delta="-1" bindtap="adjustPutts">−</view>
         <text class="putt-num">{{putts}}</text>
-        <view class="stroke-btn small" bindtap="adjustPutts" data-delta="1">+</view>
+        <view class="stroke-btn small" data-delta="1" bindtap="adjustPutts">+</view>
       </view>
     </view>
 
     <!-- 备注 -->
     <view class="input-section card">
       <text class="section-title">备注（选填）</text>
-      <input 
-        class="note-input" 
-        placeholder="OB/下水/一切进洞..."
-        value="{{note}}"
-        bindinput="onNoteInput"
-      />
+      <input class="note-input" placeholder="OB/下水/一切进洞..." value="{{note}}" bindinput="onNoteInput" />
     </view>
 
     <!-- 确认按钮 -->
-    <button class="btn-confirm" bindtap="confirmHole">
-      {{currentHole >= 18 ? '完成记录' : '确认，下一洞'}}
-    </button>
+    <button class="btn-confirm" bindtap="confirmHole">{{currentHole >= 18 ? '完成记录' : '确认，下一洞'}}</button>
   </view>
 </view>

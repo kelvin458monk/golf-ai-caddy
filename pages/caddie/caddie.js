@@ -1,8 +1,5 @@
 // pages/caddie/caddie.js
 // 球童端 - 扫码进入后使用的记录页面
-const util = require('../../utils/util')
-
-// 球杆选项
 const CLUB_OPTIONS = [
   { id: 'driver', name: '1号木' },
   { id: 'wood3', name: '3号木' },
@@ -27,18 +24,14 @@ Page({
     courseName: '未知球场',
     currentHole: 1,
     totalHoles: 18,
-    // 当前洞数据
     strokes: 4,
     selectedClubs: [],
     putts: 2,
     note: '',
-    // 全部记录
     holes: [],
     isCompleted: false,
     totalStrokes: 0,
-    // 实时统计
     doneCount: 0,
-    // 球杆选项
     clubOptions: CLUB_OPTIONS
   },
 
@@ -59,35 +52,21 @@ Page({
       return
     }
 
-    this.setData({ 
-      roomId,
-      courseName: courseName ? decodeURIComponent(courseName) : '未知球场'
-    })
-    
+    this.setData({ roomId, courseName: courseName ? decodeURIComponent(courseName) : '未知球场' })
     this.initHoles(coursePars)
     this.loadRoomData()
   },
 
   initHoles(coursePars) {
-    const holes = []
-    // 前9洞标准杆（从create传入），后9洞默认4
     const defaultPars = [4,4,4,4,4,4,4,4,4]
+    const holes = []
     for (let i = 0; i < 18; i++) {
       const par = coursePars && coursePars[i] ? coursePars[i] : defaultPars[i]
-      holes.push({
-        holeNumber: i + 1,
-        par,
-        strokes: 0,
-        clubs: [],
-        putts: 0,
-        note: '',
-        done: false
-      })
+      holes.push({ holeNumber: i + 1, par, strokes: 0, clubs: [], putts: 0, note: '', done: false })
     }
     this.setData({ holes })
   },
 
-  // 加载房间数据
   loadRoomData() {
     const room = wx.getStorageSync('currentRoom')
     if (room && room.courseName) {
@@ -96,41 +75,28 @@ Page({
     this.setData({ loading: false })
   },
 
-  // 杆数增减
+  // 杆数
   adjustStrokes(e) {
     const delta = parseInt(e.currentTarget.dataset.delta)
-    let val = this.data.strokes + delta
-    val = Math.max(1, Math.min(15, val))
+    const val = Math.max(1, Math.min(15, this.data.strokes + delta))
     this.setData({ strokes: val })
   },
 
-  setStrokes(e) {
-    const val = parseInt(e.currentTarget.dataset.val)
-    this.setData({ strokes: val })
-  },
-
-  // 推杆数调整
+  // 推杆
   adjustPutts(e) {
     const delta = parseInt(e.currentTarget.dataset.delta)
-    let val = this.data.putts + delta
-    val = Math.max(0, Math.min(10, val))
+    const val = Math.max(0, Math.min(10, this.data.putts + delta))
     this.setData({ putts: val })
   },
 
-  setPutts(e) {
-    const val = parseInt(e.currentTarget.dataset.val)
-    this.setData({ putts: val })
-  },
-
-  // 球杆多选
+  // 球杆选择
   toggleClub(e) {
-    const clubId = e.currentTarget.dataset.id
-    const clubs = [...this.data.selectedClubs]
-    const idx = clubs.indexOf(clubId)
-    if (idx > -1) {
-      clubs.splice(idx, 1)
+    const clubId = e.currentTarget.targetDataset.id || e.currentTarget.dataset.id
+    let clubs = this.data.selectedClubs
+    if (clubs.includes(clubId)) {
+      clubs = clubs.filter(id => id !== clubId)
     } else {
-      clubs.push(clubId)
+      clubs = [...clubs, clubId]
     }
     this.setData({ selectedClubs: clubs })
   },
@@ -151,7 +117,7 @@ Page({
 
     holes[idx] = {
       holeNumber: this.data.currentHole,
-      par: 4,
+      par: holes[idx].par,
       strokes: this.data.strokes,
       clubs: clubNames,
       putts: this.data.putts,
@@ -159,18 +125,15 @@ Page({
       done: true
     }
 
-    // 计算实时统计
     const doneCount = holes.filter(h => h.done).length
     const totalStrokes = holes.reduce((s, h) => s + (h.strokes || 0), 0)
 
     if (this.data.currentHole >= 18) {
-      // 完成
       this.setData({ holes, isCompleted: true, totalStrokes, doneCount })
       this.saveToCloud()
       return
     }
 
-    // 下一洞
     this.setData({
       holes,
       currentHole: this.data.currentHole + 1,
@@ -183,7 +146,6 @@ Page({
     })
   },
 
-  // 保存到云端
   saveToCloud() {
     const roundData = {
       roomId: this.data.roomId,
@@ -192,21 +154,22 @@ Page({
       totalStrokes: this.data.totalStrokes,
       savedAt: Date.now()
     }
-    // 保存到已完成列表
     const completedRounds = wx.getStorageSync('completedRounds') || []
     completedRounds.unshift(roundData)
     wx.setStorageSync('completedRounds', completedRounds)
-    
     wx.showToast({ title: '记录已保存', icon: 'success' })
   },
 
-  // 查看已记录数据
   viewRecord() {
-    const done = this.data.holes.filter(h => h.done).length
     wx.showModal({
       title: '已完成记录',
-      content: `共${done}洞，总杆：${this.data.totalStrokes}`,
+      content: `共${this.data.doneCount}洞，总杆：${this.data.totalStrokes}`,
       showCancel: false
     })
+  },
+
+  // 检查球杆是否已选
+  isClubSelected(clubId) {
+    return this.data.selectedClubs.includes(clubId)
   }
 })
