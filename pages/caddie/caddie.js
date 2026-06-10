@@ -24,7 +24,7 @@ const CLUB_OPTIONS = [
 Page({
   data: {
     roomId: '',
-    courseName: '',
+    courseName: '未知球场',
     currentHole: 1,
     totalHoles: 18,
     // 当前洞数据
@@ -36,19 +36,27 @@ Page({
     holes: [],
     isCompleted: false,
     totalStrokes: 0,
-    loading: true,
+    // 实时统计
+    doneCount: 0,
     // 球杆选项
     clubOptions: CLUB_OPTIONS
   },
 
   onLoad(options) {
     const roomId = options.roomId || ''
+    const courseName = options.course || ''
+    
     if (!roomId) {
       wx.showToast({ title: '无效的二维码', icon: 'none' })
       setTimeout(() => wx.navigateBack(), 1500)
       return
     }
-    this.setData({ roomId })
+
+    this.setData({ 
+      roomId,
+      courseName: courseName ? decodeURIComponent(courseName) : '未知球场'
+    })
+    
     this.initHoles()
     this.loadRoomData()
   },
@@ -69,18 +77,13 @@ Page({
     this.setData({ holes })
   },
 
-  // 加载房间数据（从缓存或云端）
+  // 加载房间数据
   loadRoomData() {
-    // 模拟数据（实际从云端获取）
-    const mockRooms = {
-      'room_001': { courseName: '观澜湖球会', holes: [] },
-      'room_002': { courseName: '深圳高尔夫俱乐部', holes: [] }
+    const room = wx.getStorageSync('currentRoom')
+    if (room && room.courseName) {
+      this.setData({ courseName: room.courseName })
     }
-    const roomData = mockRooms[this.data.roomId] || { courseName: '未知球场' }
-    this.setData({
-      courseName: roomData.courseName,
-      loading: false
-    })
+    this.setData({ loading: false })
   },
 
   // 杆数增减
@@ -146,10 +149,13 @@ Page({
       done: true
     }
 
+    // 计算实时统计
+    const doneCount = holes.filter(h => h.done).length
+    const totalStrokes = holes.reduce((s, h) => s + (h.strokes || 0), 0)
+
     if (this.data.currentHole >= 18) {
       // 完成
-      const totalStrokes = holes.reduce((s, h) => s + h.strokes, 0)
-      this.setData({ holes, isCompleted: true, totalStrokes })
+      this.setData({ holes, isCompleted: true, totalStrokes, doneCount })
       this.saveToCloud()
       return
     }
@@ -161,27 +167,35 @@ Page({
       strokes: 4,
       selectedClubs: [],
       putts: 2,
-      note: ''
+      note: '',
+      doneCount,
+      totalStrokes
     })
   },
 
   // 保存到云端
   saveToCloud() {
-    // TODO: 实际保存到微信云开发数据库
-    wx.setStorageSync('currentRound', {
+    const roundData = {
       roomId: this.data.roomId,
       courseName: this.data.courseName,
       holes: this.data.holes,
+      totalStrokes: this.data.totalStrokes,
       savedAt: Date.now()
-    })
+    }
+    // 保存到已完成列表
+    const completedRounds = wx.getStorageSync('completedRounds') || []
+    completedRounds.unshift(roundData)
+    wx.setStorageSync('completedRounds', completedRounds)
+    
     wx.showToast({ title: '记录已保存', icon: 'success' })
   },
 
   // 查看已记录数据
   viewRecord() {
+    const done = this.data.holes.filter(h => h.done).length
     wx.showModal({
       title: '已完成记录',
-      content: `共18洞，总杆：${this.data.totalStrokes}`,
+      content: `共${done}洞，总杆：${this.data.totalStrokes}`,
       showCancel: false
     })
   }

@@ -1,5 +1,5 @@
 <!-- pages/caddie/caddie.wxml -->
-<!-- 球童端：扫码进入的记录页面 -->
+<!-- 球童端：扫码进入后使用的记录页面 -->
 <view class="container">
 
   <!-- 加载中 -->
@@ -22,22 +22,42 @@
 
   <!-- 记录进行中 -->
   <view wx:else class="record-page">
-    <!-- 顶部：洞号 + 球场 -->
+
+    <!-- 顶部：洞号 + 球场 + 实时统计 -->
     <view class="record-header">
-      <view class="hole-badge">H{{currentHole}}</view>
-      <view class="course-info">
-        <text class="course-name">{{courseName}}</text>
-        <text class="hole-progress">第 {{currentHole}} / {{totalHoles}} 洞</text>
+      <view class="header-left">
+        <view class="hole-badge">H{{currentHole}}</view>
+        <view class="course-info">
+          <text class="course-name">{{courseName}}</text>
+          <text class="hole-progress">第 {{currentHole}} / {{totalHoles}} 洞</text>
+        </view>
+      </view>
+      <view class="header-right">
+        <view class="live-stat">
+          <text class="stat-label">已记</text>
+          <text class="stat-num">{{doneCount}}</text>
+        </view>
+        <view class="live-stat">
+          <text class="stat-label">当前</text>
+          <text class="stat-num">{{strokes}}</text>
+        </view>
+        <view class="live-stat">
+          <text class="stat-label">累计</text>
+          <text class="stat-num">{{totalStrokes}}</text>
+        </view>
       </view>
     </view>
 
-    <!-- 进度条 -->
-    <view class="progress-bar">
+    <!-- 18洞进度条 + 杆数显示 -->
+    <view class="holes-overview">
       <view 
         wx:for="{{holes}}" 
-        wx:key="holeNumber" 
-        class="dot {{item.done ? 'done' : ''}}"
-      ></view>
+        wx:key="holeNumber"
+        class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
+      >
+        <text class="hole-num">{{item.holeNumber}}</text>
+        <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
+      </view>
     </view>
 
     <!-- 杆数输入 -->
@@ -59,14 +79,14 @@
       </view>
     </view>
 
-    <!-- 球杆选择 -->
+    <!-- 球杆选择（多选） -->
     <view class="input-section card">
-      <text class="section-title">使用球杆</text>
+      <text class="section-title">使用球杆 <text class="section-hint">（可多选）</text></text>
       <view class="club-grid">
         <view 
           wx:for="{{clubOptions}}" 
           wx:key="id"
-          class="club-btn {{selectedClubs.indexOf(item.id) > -1 ? 'active' : ''}}"
+          class="club-btn {{selectedClubs.indexOf(item.id) >= 0 ? 'active' : ''}}"
           bindtap="toggleClub"
           data-id="{{item.id}}"
         >{{item.name}}</view>

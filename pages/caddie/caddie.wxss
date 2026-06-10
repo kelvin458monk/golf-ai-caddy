@@ -7,109 +7,117 @@
   font-size: 28rpx;
 }
 
-/* 已完成页 */
-.completed-page {
-  text-align: center;
-  padding: 80rpx 40rpx;
-}
-
-.completed-icon {
-  font-size: 120rpx;
-}
-
-.completed-title {
-  font-size: 44rpx;
-  font-weight: 700;
-  color: #333;
-  display: block;
-  margin-top: 20rpx;
-}
-
-.completed-sub {
-  font-size: 26rpx;
-  color: #999;
-  display: block;
-  margin-top: 10rpx;
-}
-
-.summary-card {
-  margin: 40rpx 0;
-  padding: 40rpx;
-}
-
-.total-score {
-  font-size: 80rpx;
-  font-weight: 800;
-  color: #1B8A6B;
-  display: block;
-}
-
-.total-label {
-  font-size: 24rpx;
-  color: #999;
-  display: block;
-  margin-top: 8rpx;
-}
-
-/* 记录页 */
+/* 顶部区域 */
 .record-header {
+  background: linear-gradient(135deg, #1B8A6B 0%, #2ECC71 100%);
+  padding: 30rpx 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
   display: flex;
   align-items: center;
-  padding: 20rpx 30rpx;
-  background: linear-gradient(135deg, #1B8A6B, #2ECC71);
+  gap: 20rpx;
 }
 
 .hole-badge {
-  width: 80rpx;
-  height: 80rpx;
-  background: rgba(255,255,255,0.2);
-  border-radius: 50%;
-  text-align: center;
-  line-height: 80rpx;
-  font-size: 32rpx;
+  background: #FFF;
+  color: #1B8A6B;
+  font-size: 36rpx;
   font-weight: 700;
-  color: #FFF;
-  margin-right: 20rpx;
+  padding: 16rpx 24rpx;
+  border-radius: 16rpx;
 }
 
 .course-info {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .course-name {
   font-size: 30rpx;
   font-weight: 600;
   color: #FFF;
-  display: block;
 }
 
 .hole-progress {
-  font-size: 24rpx;
+  font-size: 22rpx;
+  color: rgba(255,255,255,0.8);
+}
+
+.header-right {
+  display: flex;
+  gap: 20rpx;
+}
+
+.live-stat {
+  text-align: center;
+  background: rgba(255,255,255,0.2);
+  padding: 12rpx 16rpx;
+  border-radius: 12rpx;
+}
+
+.live-stat .stat-label {
+  font-size: 20rpx;
   color: rgba(255,255,255,0.8);
   display: block;
-  margin-top: 4rpx;
 }
 
-/* 进度条 */
-.progress-bar {
+.live-stat .stat-num {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #FFF;
+  display: block;
+}
+
+/* 18洞概览 */
+.holes-overview {
   display: flex;
-  gap: 6rpx;
-  padding: 16rpx 30rpx;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  padding: 20rpx 24rpx;
   background: #FFF;
+  border-bottom: 1rpx solid #F0F0F0;
 }
 
-.dot {
-  flex: 1;
-  height: 8rpx;
-  background: #E0E0E0;
-  border-radius: 4rpx;
+.hole-item {
+  width: calc(100% / 6 - 6rpx);
+  text-align: center;
+  padding: 10rpx 0;
+  background: #F5F5F5;
+  border-radius: 8rpx;
+  border: 2rpx solid transparent;
 }
 
-.dot.done {
-  background: #2ECC71;
+.hole-item.done {
+  background: #E8F5E9;
 }
 
-/* 输入区块 */
+.hole-item.current {
+  border-color: #1B8A6B;
+  background: #F0FFF8;
+}
+
+.hole-num {
+  font-size: 18rpx;
+  color: #999;
+  display: block;
+}
+
+.hole-score {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.hole-item.done .hole-score {
+  color: #1B8A6B;
+}
+
+/* 输入区域 */
 .input-section {
   margin: 16rpx 24rpx;
   padding: 24rpx;
@@ -123,63 +131,63 @@
   margin-bottom: 16rpx;
 }
 
+.section-hint {
+  font-size: 22rpx;
+  color: #999;
+  font-weight: 400;
+}
+
 /* 杆数输入 */
 .stroke-row {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 40rpx;
-  margin-bottom: 16rpx;
+  margin-bottom: 20rpx;
 }
 
 .stroke-btn {
   width: 80rpx;
   height: 80rpx;
-  background: #F0F0F0;
+  background: linear-gradient(135deg, #1B8A6B, #2ECC71);
+  color: #FFF;
+  font-size: 40rpx;
+  font-weight: 700;
   border-radius: 50%;
   text-align: center;
   line-height: 80rpx;
-  font-size: 48rpx;
-  font-weight: 700;
-  color: #333;
 }
 
 .stroke-btn.small {
   width: 60rpx;
   height: 60rpx;
+  font-size: 32rpx;
   line-height: 60rpx;
-  font-size: 36rpx;
-}
-
-.stroke-btn:active {
-  background: #DDD;
 }
 
 .stroke-num {
-  font-size: 72rpx;
+  font-size: 64rpx;
   font-weight: 700;
-  color: #1B8A6B;
-  width: 100rpx;
+  color: #333;
+  min-width: 100rpx;
   text-align: center;
 }
 
-/* 快捷数字 */
 .quick-row {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
   gap: 12rpx;
-  justify-content: center;
 }
 
 .quick-btn {
-  width: 56rpx;
-  height: 56rpx;
-  background: #F5F5F5;
-  border-radius: 50%;
+  flex: 1;
+  padding: 16rpx 0;
   text-align: center;
-  line-height: 56rpx;
-  font-size: 26rpx;
+  font-size: 28rpx;
+  font-weight: 600;
   color: #666;
+  background: #F5F5F5;
+  border-radius: 12rpx;
 }
 
 .quick-btn.active {
@@ -187,7 +195,7 @@
   color: #FFF;
 }
 
-/* 球杆选择 */
+/* 球杆多选 */
 .club-grid {
   display: flex;
   flex-wrap: wrap;
@@ -195,48 +203,48 @@
 }
 
 .club-btn {
-  padding: 12rpx 20rpx;
+  padding: 16rpx 24rpx;
+  font-size: 26rpx;
+  color: #666;
   background: #F5F5F5;
   border-radius: 30rpx;
-  font-size: 24rpx;
-  color: #666;
   border: 2rpx solid transparent;
 }
 
 .club-btn.active {
   background: #E8F5E9;
-  border-color: #1B8A6B;
   color: #1B8A6B;
+  border-color: #1B8A6B;
 }
 
-/* 推杆 */
+/* 推杆数 */
 .putt-row {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 40rpx;
 }
 
 .putt-num {
-  font-size: 56rpx;
+  font-size: 48rpx;
   font-weight: 700;
-  color: #1B8A6B;
-  width: 80rpx;
+  color: #333;
+  min-width: 80rpx;
   text-align: center;
 }
 
 /* 备注 */
 .note-input {
-  background: #F5F5F5;
+  border: 1rpx solid #E0E0E0;
   border-radius: 12rpx;
-  padding: 16rpx 20rpx;
+  padding: 20rpx;
   font-size: 28rpx;
-  color: #333;
+  background: #FAFAFA;
 }
 
 /* 确认按钮 */
 .btn-confirm {
-  margin: 30rpx 24rpx;
+  margin: 20rpx 24rpx 40rpx;
   background: linear-gradient(135deg, #1B8A6B, #2ECC71);
   color: #FFF;
   border-radius: 50rpx;
@@ -246,16 +254,66 @@
   border: none;
 }
 
-.btn-confirm:active {
-  opacity: 0.85;
+.btn-confirm:active { opacity: 0.85; }
+
+/* 已完成页面 */
+.completed-page {
+  text-align: center;
+  padding: 80rpx 40rpx;
+}
+
+.completed-icon {
+  font-size: 100rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.completed-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.completed-sub {
+  font-size: 26rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 40rpx;
+}
+
+.summary-card {
+  margin: 30rpx 0;
+  padding: 40rpx;
+}
+
+.card-title {
+  font-size: 26rpx;
+  color: #999;
+  display: block;
+}
+
+.total-score {
+  font-size: 80rpx;
+  font-weight: 800;
+  color: #1B8A6B;
+  display: block;
+}
+
+.total-label {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
 }
 
 .btn-primary {
   margin: 20rpx 24rpx;
-  background: #1B8A6B;
+  background: linear-gradient(135deg, #1B8A6B, #2ECC71);
   color: #FFF;
   border-radius: 50rpx;
-  padding: 24rpx;
-  font-size: 30rpx;
+  padding: 28rpx;
+  font-size: 32rpx;
+  font-weight: 600;
   border: none;
 }
