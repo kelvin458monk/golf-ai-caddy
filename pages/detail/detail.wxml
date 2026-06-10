@@ -1,0 +1,127 @@
+<!-- pages/detail/detail.wxml -->
+<wxs src="../../utils/util.wxs" module="u" />
+
+<view class="container">
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:else class="detail-page">
+    <!-- 成绩摘要 -->
+    <view class="score-summary card">
+      <view class="summary-header">
+        <text class="summary-course">{{round.courseName}}</text>
+        <text class="summary-date">{{round.date}}</text>
+      </view>
+      <view class="summary-body">
+        <view class="summary-main">
+          <text class="summary-score {{round.totalStrokes <= round.par ? 'text-green' : ''}}">
+            {{round.totalStrokes}}
+          </text>
+          <text class="summary-label">总杆</text>
+        </view>
+        <view class="summary-details">
+          <view class="summary-item">
+            <text class="si-val">{{round.par}}</text>
+            <text class="si-label">标准杆</text>
+          </view>
+          <view class="summary-item">
+            <text class="si-val {{round.totalStrokes > round.par ? 'text-danger' : 'text-green'}}">
+              {{u.calcParDiff(round.totalStrokes, round.par)}}
+            </text>
+            <text class="si-label">成绩</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 每洞成绩表 -->
+    <view class="card">
+      <view class="card-title">每洞成绩</view>
+      <view class="holes-list">
+
+        <!-- 上半场（1-9） -->
+        <view class="holes-section">
+          <view class="holes-row header-row">
+            <text class="hole-cell hole-label">洞</text>
+            <text wx:for="{{round.holes.slice(0,9)}}" wx:key="hole" class="hole-cell">{{item.hole}}</text>
+          </view>
+          <view class="holes-row">
+            <text class="hole-cell hole-label">Par</text>
+            <text wx:for="{{round.holes.slice(0,9)}}" wx:key="hole" class="hole-cell">{{item.par}}</text>
+          </view>
+          <view class="holes-row">
+            <text class="hole-cell hole-label">杆</text>
+            <text wx:for="{{round.holes.slice(0,9)}}" wx:key="hole" 
+              class="hole-cell {{getHoleStyle(item.strokes, item.par)}}">{{item.strokes}}</text>
+          </view>
+        </view>
+
+        <!-- 下半场（10-18） -->
+        <view class="holes-section">
+          <view class="holes-row header-row">
+            <text class="hole-cell hole-label">洞</text>
+            <text wx:for="{{round.holes.slice(9,18)}}" wx:key="hole" class="hole-cell">{{item.hole}}</text>
+          </view>
+          <view class="holes-row">
+            <text class="hole-cell hole-label">Par</text>
+            <text wx:for="{{round.holes.slice(9,18)}}" wx:key="hole" class="hole-cell">{{item.par}}</text>
+          </view>
+          <view class="holes-row">
+            <text class="hole-cell hole-label">杆</text>
+            <text wx:for="{{round.holes.slice(9,18)}}" wx:key="hole" 
+              class="hole-cell {{getHoleStyle(item.strokes, item.par)}}">{{item.strokes}}</text>
+          </view>
+        </view>
+
+        <!-- 图例 -->
+        <view class="legend">
+          <text class="legend-item eagle">● 老鹰</text>
+          <text class="legend-item birdie">● 小鸟</text>
+          <text class="legend-item par">● 标准杆</text>
+          <text class="legend-item bogey">● 博基</text>
+          <text class="legend-item double-bogey">● 双博基+</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- AI分析 -->
+    <view class="card analysis-card">
+      <view class="card-title">
+        🤖 AI分析
+        <button wx:if="{{!showAnalysis}}" class="analysis-btn" 
+          bindtap="getAnalysis" loading="{{analysisLoading}}">
+          {{analysisLoading ? '分析中...' : '生成分析报告'}}
+        </button>
+      </view>
+
+      <view wx:if="{{showAnalysis && analysis}}" class="analysis-content">
+        <view class="analysis-item">
+          <text class="ai-label">📊 总结</text>
+          <text class="ai-text">{{analysis.summary}}</text>
+        </view>
+        <view class="analysis-item">
+          <text class="ai-label">✅ 优势</text>
+          <text class="ai-text">{{analysis.strengths}}</text>
+        </view>
+        <view class="analysis-item">
+          <text class="ai-label">⚠️ 待提升</text>
+          <text class="ai-text">{{analysis.improvements}}</text>
+        </view>
+        <view class="analysis-item">
+          <text class="ai-label">💡 建议</text>
+          <text class="ai-text">{{analysis.suggestions}}</text>
+        </view>
+        <view class="analysis-item">
+          <text class="ai-label">📈 趋势</text>
+          <text class="ai-text">{{analysis.scoreTrend}}</text>
+        </view>
+      </view>
+
+      <view wx:if="{{!showAnalysis}}" class="analysis-placeholder">
+        <text>点击按钮，AI将基于您的成绩数据生成个性化分析报告</text>
+      </view>
+    </view>
+  </view>
+</view>

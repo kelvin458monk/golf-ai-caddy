@@ -1,0 +1,54 @@
+/**app.wxss**/
+@import 'styles/theme.wxss';
+
+.container {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding-bottom: 20rpx;
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  margin: 20rpx 30rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #1B8A6B, #2ECC71);
+  color: #FFFFFF;
+  border-radius: 50rpx;
+  padding: 24rpx 60rpx;
+  font-size: 32rpx;
+  text-align: center;
+  border: none;
+  width: 100%;
+}
+
+.btn-primary:active {
+  opacity: 0.8;
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin: 30rpx 30rpx 20rpx;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-green {
+  color: #1B8A6B;
+}
+
+.text-gray {
+  color: #999;
+}
+
+.text-small {
+  font-size: 24rpx;
+}

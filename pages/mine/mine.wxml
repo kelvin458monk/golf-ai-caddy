@@ -1,0 +1,54 @@
+<!-- pages/mine/mine.wxml -->
+<view class="container">
+  <!-- 用户信息 -->
+  <view class="user-section">
+    <view class="user-avatar">
+      <image wx:if="{{userInfo}}" src="{{userInfo.avatarUrl}}" class="avatar-img"></image>
+      <view wx:else class="avatar-placeholder">🏌️</view>
+    </view>
+    <text class="user-name">{{userInfo ? userInfo.nickName : '未登录'}}</text>
+    <button wx:if="{{!hasLogin}}" class="login-btn" open-type="getUserInfo" bindgetuserinfo="onGetUserInfo">
+      微信登录
+    </button>
+  </view>
+
+  <!-- 统计数据 -->
+  <view class="stats-card card">
+    <view class="stat-item">
+      <text class="stat-num">{{stats.totalRounds}}</text>
+      <text class="stat-label">总场次</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.avgScore || '--'}}</text>
+      <text class="stat-label">平均杆数</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-num">{{stats.bestScore || '--'}}</text>
+      <text class="stat-label">最佳成绩</text>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="viewStats">
+      <text class="menu-icon">📊</text>
+      <text class="menu-text">战绩统计</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goSettings">
+      <text class="menu-icon">⚙️</text>
+      <text class="menu-text">设置</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goAbout">
+      <text class="menu-icon">ℹ️</text>
+      <text class="menu-text">关于</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text>Golf AI Caddy v1.0.0</text>
+  </view>
+</view>

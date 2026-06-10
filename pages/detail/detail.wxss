@@ -1,0 +1,195 @@
+/* pages/detail/detail.wxss */
+
+.loading {
+  text-align: center;
+  padding: 200rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 成绩摘要 */
+.score-summary {
+  padding: 30rpx;
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.summary-course {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.summary-date {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.summary-body {
+  display: flex;
+  align-items: center;
+  gap: 40rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F0F0F0;
+}
+
+.summary-main {
+  text-align: center;
+  flex: 1;
+}
+
+.summary-score {
+  font-size: 72rpx;
+  font-weight: 800;
+  color: #333;
+  display: block;
+  line-height: 1;
+}
+
+.summary-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.summary-details {
+  flex: 1;
+  display: flex;
+  gap: 20rpx;
+}
+
+.summary-item {
+  flex: 1;
+  text-align: center;
+}
+
+.si-val {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.si-label {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+  display: block;
+}
+
+/* 成绩表 */
+.card-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.holes-section {
+  margin-bottom: 16rpx;
+}
+
+.holes-row {
+  display: flex;
+  margin-bottom: 4rpx;
+}
+
+.hole-cell {
+  width: calc((100% - 60rpx) / 9);
+  text-align: center;
+  font-size: 24rpx;
+  padding: 8rpx 0;
+  color: #333;
+}
+
+.hole-label {
+  width: 60rpx;
+  font-size: 22rpx;
+  color: #999;
+  font-weight: 500;
+}
+
+.header-row .hole-cell {
+  font-weight: 600;
+  color: #666;
+}
+
+/* 每洞成绩颜色 */
+.eagle { color: #FFD700; font-weight: 700; }
+.birdie { color: #27AE60; font-weight: 700; }
+.par { color: #3498DB; }
+.bogey { color: #E67E22; }
+.double-bogey { color: #E74C3C; }
+.other { color: #C0392B; font-weight: 700; }
+
+/* 图例 */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #F0F0F0;
+}
+
+.legend-item {
+  font-size: 20rpx;
+}
+
+/* AI分析 */
+.analysis-card {
+  margin-bottom: 40rpx;
+}
+
+.analysis-btn {
+  background: #1B8A6B;
+  color: #FFF;
+  font-size: 26rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 30rpx;
+  border: none;
+  min-width: 160rpx;
+}
+
+.analysis-btn:active {
+  opacity: 0.8;
+}
+
+.analysis-placeholder {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #ccc;
+  font-size: 26rpx;
+}
+
+.analysis-content {
+  padding-top: 10rpx;
+}
+
+.analysis-item {
+  margin-bottom: 20rpx;
+  padding: 16rpx;
+  background: #F8FFF9;
+  border-radius: 12rpx;
+}
+
+.ai-label {
+  font-size: 26rpx;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.ai-text {
+  font-size: 26rpx;
+  color: #555;
+  line-height: 1.6;
+}

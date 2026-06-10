@@ -1,0 +1,322 @@
+/* pages/record/record.wxss */
+
+.step-panel {
+  padding: 20rpx 30rpx;
+  padding-bottom: 120rpx;
+}
+
+.step-header {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.step-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #333;
+  display: block;
+}
+
+.step-desc {
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 10rpx;
+  display: block;
+}
+
+/* 球场选择 */
+.course-card {
+  margin-bottom: 20rpx;
+}
+
+.course-card:active {
+  transform: scale(0.98);
+}
+
+.course-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.course-info {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+  display: block;
+}
+
+/* 成绩输入头部 */
+.score-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.hole-progress {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1B8A6B;
+}
+
+.course-name-small {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 进度条 */
+.progress-bar {
+  display: flex;
+  gap: 6rpx;
+  padding: 20rpx 0;
+  justify-content: center;
+}
+
+.progress-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #E0E0E0;
+}
+
+.progress-dot.done {
+  background: #1B8A6B;
+}
+
+.progress-dot.active {
+  background: #2ECC71;
+  transform: scale(1.3);
+}
+
+/* 标准杆选择 */
+.par-select {
+  margin: 20rpx 0;
+}
+
+.section-label {
+  font-size: 28rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.par-options {
+  display: flex;
+  gap: 20rpx;
+}
+
+.par-btn {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  border: 2rpx solid #DDD;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #666;
+}
+
+.par-btn.selected {
+  background: #E8F5E9;
+  border-color: #1B8A6B;
+  color: #1B8A6B;
+}
+
+/* 杆数选择器 */
+.stroke-input-area {
+  margin: 40rpx 0;
+}
+
+.stroke-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40rpx;
+  margin: 20rpx 0;
+}
+
+.stroke-adjust {
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-size: 48rpx;
+  font-weight: 700;
+  background: #F0F0F0;
+  border-radius: 50%;
+  color: #333;
+}
+
+.stroke-adjust:active {
+  background: #DDD;
+}
+
+.stroke-value {
+  font-size: 80rpx;
+  font-weight: 700;
+  color: #1B8A6B;
+  width: 120rpx;
+  text-align: center;
+}
+
+/* 快捷选择 */
+.quick-strokes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  justify-content: center;
+  margin-top: 20rpx;
+}
+
+.quick-btn {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 28rpx;
+  border-radius: 50%;
+  background: #F5F5F5;
+  color: #666;
+}
+
+.quick-btn.selected {
+  background: #1B8A6B;
+  color: #FFF;
+}
+
+.quick-btn:active {
+  transform: scale(0.9);
+}
+
+.confirm-btn {
+  margin-top: 40rpx;
+}
+
+/* 预览 */
+.preview-header {
+  text-align: center;
+  padding: 30rpx 0;
+}
+
+.preview-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333;
+  display: block;
+}
+
+.preview-date {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.total-summary {
+  margin: 20rpx 0;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.total-item {
+  text-align: center;
+}
+
+.total-num {
+  font-size: 52rpx;
+  font-weight: 700;
+  color: #333;
+  display: block;
+}
+
+.total-label {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 6rpx;
+  display: block;
+}
+
+/* 每洞列表 */
+.holes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.hole-item {
+  width: calc(100% / 6 - 10rpx);
+  text-align: center;
+  padding: 12rpx 0;
+  background: #F9F9F9;
+  border-radius: 8rpx;
+}
+
+.hole-number {
+  font-size: 20rpx;
+  color: #999;
+  display: block;
+}
+
+.hole-strokes {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin: 4rpx 0;
+}
+
+.hole-par {
+  font-size: 18rpx;
+  color: #aaa;
+  display: block;
+}
+
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+
+.action-buttons .btn-primary {
+  flex: 2;
+}
+
+.btn-edit {
+  flex: 1;
+  background: #F5F5F5;
+  color: #666;
+  border-radius: 50rpx;
+  padding: 24rpx 30rpx;
+  font-size: 28rpx;
+  text-align: center;
+  border: none;
+}
+
+/* 底部栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 30rpx;
+  background: #FFF;
+  border-top: 1rpx solid #EEE;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.bottom-bar .btn-primary.small {
+  width: auto;
+  padding: 16rpx 40rpx;
+  font-size: 26rpx;
+}

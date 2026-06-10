@@ -1,0 +1,66 @@
+/* theme.wxss - 高尔夫AI助手主题配置 */
+
+/* 主色-森林绿 */
+:root {
+  --primary: #1B8A6B;
+  --primary-light: #27AE60;
+  --primary-dark: #146B52;
+  --accent: #F1C40F;
+  --bg: #F5F5F5;
+  --card: #FFFFFF;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-hint: #999999;
+  --border: #EEEEEE;
+  --danger: #E74C3C;
+}
+
+/* 常用间距 */
+.page-padding {
+  padding: 20rpx 30rpx;
+}
+
+.mb-10 { margin-bottom: 10rpx; }
+.mb-20 { margin-bottom: 20rpx; }
+.mb-30 { margin-bottom: 30rpx; }
+.mt-20 { margin-top: 20rpx; }
+.mt-30 { margin-top: 30rpx; }
+
+/* 标签样式 */
+.tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 30rpx;
+  font-size: 22rpx;
+  margin-right: 10rpx;
+}
+
+.tag-green {
+  background: #E8F5E9;
+  color: #1B8A6B;
+}
+
+.tag-orange {
+  background: #FFF3E0;
+  color: #E67E22;
+}
+
+.tag-blue {
+  background: #E3F2FD;
+  color: #1976D2;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-state text {
+  color: #999;
+  font-size: 28rpx;
+  margin-top: 20rpx;
+}
