@@ -1,4 +1,4 @@
-/* pages/caddie/caddie.wxss - 极简紧凑版 */
+/* pages/caddie/caddie.wxss - 逐杆记录版 */
 
 .loading {
   text-align: center;
@@ -122,6 +122,62 @@
   color: #1B8A6B;
 }
 
+/* 已选球杆记录 */
+.club-record {
+  background: #FFF;
+  padding: 16rpx 24rpx;
+  border-bottom: 1rpx solid #EEE;
+}
+
+.record-title {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.record-item {
+  font-size: 26rpx;
+  color: #1B8A6B;
+  font-weight: 600;
+  display: inline-block;
+  margin-right: 20rpx;
+  margin-bottom: 8rpx;
+}
+
+/* 杆数进度 */
+.stroke-progress {
+  padding: 20rpx 24rpx;
+  background: #FFF;
+  margin-bottom: 16rpx;
+}
+
+.prog-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 12rpx;
+  text-align: center;
+}
+
+.prog-dots {
+  display: flex;
+  justify-content: center;
+  gap: 16rpx;
+}
+
+.dot {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  background: #E0E0E0;
+}
+
+.dot.filled {
+  background: #1B8A6B;
+}
+
 /* 输入区 */
 .input-area {
   padding: 16rpx 24rpx;
@@ -136,11 +192,6 @@
   color: #999;
   display: block;
   margin-bottom: 8rpx;
-}
-
-.tip {
-  font-size: 20rpx;
-  color: #BBB;
 }
 
 .row-input {
@@ -185,18 +236,38 @@
 }
 
 .club-tag {
-  padding: 10rpx 18rpx;
-  font-size: 24rpx;
+  padding: 12rpx 20rpx;
+  font-size: 26rpx;
   color: #666;
   background: #FFF;
   border: 2rpx solid #DDD;
-  border-radius: 20rpx;
+  border-radius: 24rpx;
 }
 
 .club-tag.sel {
   background: #1B8A6B;
   color: #FFF;
   border-color: #1B8A6B;
+}
+
+/* 确认这一杆按钮 */
+.stroke-confirm {
+  margin: 16rpx 0;
+}
+
+.confirm-stroke-btn {
+  background: #FFF;
+  color: #1B8A6B;
+  border: 2rpx solid #1B8A6B;
+  border-radius: 50rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.confirm-stroke-btn[disabled] {
+  color: #CCC;
+  border-color: #DDD;
 }
 
 /* 备注 */
@@ -208,9 +279,25 @@
   font-size: 26rpx;
 }
 
-/* 确认按钮 */
+/* 底部按钮 */
+.bottom-btns {
+  display: flex;
+  gap: 16rpx;
+  padding: 16rpx 24rpx 40rpx;
+}
+
+.btn-edit {
+  background: #FFF;
+  color: #666;
+  border: 2rpx solid #DDD;
+  border-radius: 50rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
 .confirm-btn {
-  margin: 16rpx 24rpx 40rpx;
+  flex: 1;
   background: linear-gradient(135deg, #1B8A6B, #2ECC71);
   color: #FFF;
   border-radius: 50rpx;
