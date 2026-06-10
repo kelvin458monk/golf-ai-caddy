@@ -1,346 +1,251 @@
-/* pages/caddie/caddie.wxss */
+/* pages/caddie/caddie.wxss - 极简紧凑版 */
 
 .loading {
   text-align: center;
-  padding: 200rpx 0;
+  padding: 100rpx;
   color: #999;
-  font-size: 28rpx;
 }
 
-/* 顶部区域 */
-.record-header {
-  background: linear-gradient(135deg, #1B8A6B 0%, #2ECC71 100%);
-  padding: 30rpx 24rpx;
+.page {
+  min-height: 100vh;
+  background: #F5F5F5;
+}
+
+/* 顶部条 */
+.top-bar {
+  background: linear-gradient(135deg, #1B8A6B, #2ECC71);
+  padding: 20rpx 24rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.header-left {
+.top-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.hole-num {
+  background: #FFF;
+  color: #1B8A6B;
+  font-size: 36rpx;
+  font-weight: 700;
+  padding: 10rpx 20rpx;
+  border-radius: 12rpx;
+}
+
+.course {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #FFF;
+}
+
+.par {
+  font-size: 22rpx;
+  color: rgba(255,255,255,0.8);
+}
+
+.top-right {
+  display: flex;
+  gap: 16rpx;
+}
+
+.stat {
+  background: rgba(255,255,255,0.2);
+  color: #FFF;
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+/* 18洞进度条 */
+.holes-bar {
+  background: #FFF;
+  padding: 12rpx 16rpx;
+  border-bottom: 1rpx solid #EEE;
+}
+
+.row {
+  display: flex;
+  gap: 6rpx;
+  margin-bottom: 6rpx;
+}
+
+.row:last-child {
+  margin-bottom: 0;
+}
+
+.hole {
+  flex: 1;
+  text-align: center;
+  padding: 8rpx 0;
+  background: #F5F5F5;
+  border-radius: 6rpx;
+  border: 2rpx solid transparent;
+}
+
+.hole.done {
+  background: #E8F5E9;
+}
+
+.hole.cur {
+  border-color: #1B8A6B;
+  background: #E8F5E9;
+}
+
+.h {
+  font-size: 18rpx;
+  color: #999;
+  display: block;
+}
+
+.s {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+.hole.done .s {
+  color: #1B8A6B;
+}
+
+/* 输入区 */
+.input-area {
+  padding: 16rpx 24rpx;
+}
+
+.row-section {
+  margin-bottom: 16rpx;
+}
+
+.label {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.row-input {
   display: flex;
   align-items: center;
   gap: 20rpx;
 }
 
-.hole-badge {
-  background: #FFF;
-  color: #1B8A6B;
-  font-size: 36rpx;
-  font-weight: 700;
-  padding: 16rpx 24rpx;
-  border-radius: 16rpx;
-}
-
-.course-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.course-name {
-  font-size: 30rpx;
-  font-weight: 600;
-  color: #FFF;
-}
-
-.hole-progress {
-  font-size: 22rpx;
-  color: rgba(255,255,255,0.8);
-}
-
-.header-right {
-  display: flex;
-  gap: 12rpx;
-}
-
-.live-stat {
-  text-align: center;
-  background: rgba(255,255,255,0.2);
-  padding: 10rpx 14rpx;
-  border-radius: 10rpx;
-}
-
-.live-stat .stat-label {
-  font-size: 18rpx;
-  color: rgba(255,255,255,0.8);
-  display: block;
-}
-
-.live-stat .stat-num {
-  font-size: 30rpx;
-  font-weight: 700;
-  color: #FFF;
-  display: block;
-}
-
-/* 18洞概览 */
-.holes-overview {
-  padding: 14rpx 24rpx;
-  background: #FFF;
-  border-bottom: 1rpx solid #F0F0F0;
-}
-
-.hole-row {
-  display: flex;
-  gap: 6rpx;
-  margin-bottom: 8rpx;
-}
-
-.hole-row:last-child {
-  margin-bottom: 0;
-}
-
-.hole-item {
-  flex: 1;
-  text-align: center;
-  padding: 8rpx 0;
-  background: #F5F5F5;
-  border-radius: 8rpx;
-  border: 2rpx solid transparent;
-}
-
-.hole-item.done {
-  background: #E8F5E9;
-}
-
-.hole-item.current {
-  border-color: #1B8A6B;
-  background: #F0FFF8;
-}
-
-.hole-num {
-  font-size: 16rpx;
-  color: #999;
-  display: block;
-}
-
-.hole-par {
-  font-size: 16rpx;
-  color: #888;
-  display: block;
-}
-
-.hole-score {
-  font-size: 26rpx;
-  font-weight: 700;
-  color: #333;
-  display: block;
-}
-
-.hole-item.done .hole-score {
-  color: #1B8A6B;
-}
-
-/* 输入区域 */
-.input-section {
-  margin: 14rpx 24rpx;
-  padding: 22rpx;
-}
-
-.section-title {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #333;
-  display: inline-block;
-}
-
-.section-hint {
-  font-size: 22rpx;
-  color: #999;
-  margin-left: 10rpx;
-}
-
-/* 杆数输入 */
-.stroke-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40rpx;
-  margin-bottom: 18rpx;
-}
-
-.stroke-btn {
-  width: 80rpx;
-  height: 80rpx;
+.btn-sm {
+  width: 60rpx;
+  height: 60rpx;
   background: linear-gradient(135deg, #1B8A6B, #2ECC71);
   color: #FFF;
-  font-size: 40rpx;
+  font-size: 32rpx;
   font-weight: 700;
   border-radius: 50%;
   text-align: center;
-  line-height: 80rpx;
-}
-
-.stroke-btn.small {
-  width: 60rpx;
-  height: 60rpx;
-  font-size: 32rpx;
   line-height: 60rpx;
 }
 
-.stroke-num {
-  font-size: 64rpx;
-  font-weight: 700;
-  color: #333;
-  min-width: 100rpx;
-  text-align: center;
-}
-
-.quick-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 10rpx;
-}
-
-.quick-btn {
-  flex: 1;
-  padding: 14rpx 0;
-  text-align: center;
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #666;
-  background: #F5F5F5;
-  border-radius: 10rpx;
-}
-
-.quick-btn.active {
-  background: #1B8A6B;
-  color: #FFF;
-}
-
-/* 球杆选择 - 整行可点 */
-.club-list {
-  margin-top: 14rpx;
-}
-
-.club-row {
-  display: flex;
-  align-items: center;
-  padding: 20rpx 0;
-  border-bottom: 1rpx solid #F0F0F0;
-}
-
-.club-row:last-child {
-  border-bottom: none;
-}
-
-.club-check {
-  width: 48rpx;
-  height: 48rpx;
-  border: 2rpx solid #DDD;
-  border-radius: 10rpx;
-  text-align: center;
-  line-height: 48rpx;
-  font-size: 26rpx;
-  color: #FFF;
-  margin-right: 20rpx;
-}
-
-.club-check.checked {
-  background: #1B8A6B;
-  border-color: #1B8A6B;
-}
-
-.club-name {
-  font-size: 30rpx;
-  color: #333;
-}
-
-/* 推杆数 */
-.putt-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40rpx;
-}
-
-.putt-num {
-  font-size: 48rpx;
+.big-num {
+  font-size: 56rpx;
   font-weight: 700;
   color: #333;
   min-width: 80rpx;
   text-align: center;
 }
 
+.mid-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #333;
+  min-width: 60rpx;
+  text-align: center;
+}
+
+/* 球杆标签 */
+.club-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.club-tag {
+  padding: 10rpx 18rpx;
+  font-size: 24rpx;
+  color: #666;
+  background: #FFF;
+  border: 1rpx solid #DDD;
+  border-radius: 20rpx;
+}
+
+.club-tag.sel {
+  background: #1B8A6B;
+  color: #FFF;
+  border-color: #1B8A6B;
+}
+
 /* 备注 */
-.note-input {
-  border: 1rpx solid #E0E0E0;
-  border-radius: 12rpx;
-  padding: 18rpx;
-  font-size: 28rpx;
-  background: #FAFAFA;
-  margin-top: 10rpx;
+.note {
+  background: #FFF;
+  border: 1rpx solid #DDD;
+  border-radius: 10rpx;
+  padding: 16rpx;
+  font-size: 26rpx;
 }
 
 /* 确认按钮 */
-.btn-confirm {
-  margin: 16rpx 24rpx 40rpx;
+.confirm-btn {
+  margin: 16rpx 24rpx;
   background: linear-gradient(135deg, #1B8A6B, #2ECC71);
   color: #FFF;
   border-radius: 50rpx;
-  padding: 26rpx;
-  font-size: 32rpx;
+  padding: 24rpx;
+  font-size: 30rpx;
   font-weight: 600;
   border: none;
 }
 
-/* 已完成页面 */
+/* 已完成页 */
 .completed-page {
   text-align: center;
-  padding: 80rpx 40rpx;
+  padding: 100rpx 40rpx;
+  background: linear-gradient(135deg, #1B8A6B 0%, #2ECC71 100%);
+  min-height: 100vh;
 }
 
-.completed-icon {
+.icon {
   font-size: 100rpx;
   display: block;
   margin-bottom: 20rpx;
 }
 
-.completed-title {
+.title {
   font-size: 40rpx;
   font-weight: 700;
-  color: #333;
+  color: #FFF;
   display: block;
-  margin-bottom: 10rpx;
+  margin-bottom: 30rpx;
 }
 
-.completed-sub {
-  font-size: 26rpx;
-  color: #999;
+.score-big {
+  font-size: 100rpx;
+  font-weight: 800;
+  color: #FFF;
+  display: block;
+}
+
+.score-label {
+  font-size: 28rpx;
+  color: rgba(255,255,255,0.8);
   display: block;
   margin-bottom: 40rpx;
 }
 
-.summary-card {
-  margin: 30rpx 0;
-  padding: 40rpx;
-}
-
-.card-title {
-  font-size: 26rpx;
-  color: #999;
-  display: block;
-}
-
-.total-score {
-  font-size: 80rpx;
-  font-weight: 800;
+.btn {
+  background: #FFF;
   color: #1B8A6B;
-  display: block;
-}
-
-.total-label {
-  font-size: 24rpx;
-  color: #999;
-  display: block;
-}
-
-.btn-primary {
-  margin: 20rpx 24rpx;
-  background: linear-gradient(135deg, #1B8A6B, #2ECC71);
-  color: #FFF;
   border-radius: 50rpx;
-  padding: 26rpx;
-  font-size: 30rpx;
+  padding: 24rpx 60rpx;
+  font-size: 28rpx;
   font-weight: 600;
   border: none;
 }

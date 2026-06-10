@@ -1,5 +1,5 @@
 // pages/caddie/caddie.js
-// 球童端 - 扫码进入后使用的记录页面
+// 球童端 - 简化版，所有内容一屏显示
 const CLUB_OPTIONS = [
   { id: 'driver', name: '1号木' },
   { id: 'wood3', name: '3号木' },
@@ -25,7 +25,7 @@ Page({
     currentHole: 1,
     totalHoles: 18,
     strokes: 4,
-    selectedClubs: [],
+    selectedClubs: '',
     putts: 2,
     note: '',
     holes: [],
@@ -89,16 +89,21 @@ Page({
     this.setData({ putts: val })
   },
 
-  // 球杆选择
+  // 球杆选择 - 用逗号分隔字符串
   toggleClub(e) {
-    const clubId = e.currentTarget.targetDataset.id || e.currentTarget.dataset.id
+    const clubId = e.currentTarget.dataset.id
     let clubs = this.data.selectedClubs
-    if (clubs.includes(clubId)) {
-      clubs = clubs.filter(id => id !== clubId)
+    if (clubs.includes(',' + clubId + ',')) {
+      clubs = clubs.replace(',' + clubId + ',', ',')
     } else {
-      clubs = [...clubs, clubId]
+      clubs = clubs + clubId + ','
     }
     this.setData({ selectedClubs: clubs })
+  },
+
+  // 检查球杆是否已选
+  isClubSelected(clubId) {
+    return this.data.selectedClubs.includes(',' + clubId + ',')
   },
 
   // 备注
@@ -110,10 +115,11 @@ Page({
   confirmHole() {
     const idx = this.data.currentHole - 1
     const holes = [...this.data.holes]
-    const clubNames = this.data.selectedClubs.map(id => {
+    const clubIds = this.data.selectedClubs.split(',').filter(Boolean)
+    const clubNames = clubIds.map(id => {
       const c = CLUB_OPTIONS.find(c => c.id === id)
       return c ? c.name : ''
-    }).filter(Boolean)
+    })
 
     holes[idx] = {
       holeNumber: this.data.currentHole,
@@ -138,7 +144,7 @@ Page({
       holes,
       currentHole: this.data.currentHole + 1,
       strokes: 4,
-      selectedClubs: [],
+      selectedClubs: '',
       putts: 2,
       note: '',
       doneCount,
@@ -166,10 +172,5 @@ Page({
       content: `共${this.data.doneCount}洞，总杆：${this.data.totalStrokes}`,
       showCancel: false
     })
-  },
-
-  // 检查球杆是否已选
-  isClubSelected(clubId) {
-    return this.data.selectedClubs.includes(clubId)
   }
 })

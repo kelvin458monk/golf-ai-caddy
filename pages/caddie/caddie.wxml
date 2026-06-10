@@ -1,117 +1,88 @@
-<!-- pages/caddie/caddie.wxml -->
+<!-- pages/caddie/caddie.wxml - 极简一屏版 -->
 <view class="container">
 
-  <view wx:if="{{loading}}" class="loading">
-    <text>加载中...</text>
-  </view>
+  <view wx:if="{{loading}}" class="loading"><text>加载中...</text></view>
 
   <view wx:elif="{{isCompleted}}" class="completed-page">
-    <text class="completed-icon">✅</text>
-    <text class="completed-title">记录完成！</text>
-    <text class="completed-sub">球员可扫码查看成绩报告</text>
-    <view class="summary-card card">
-      <text class="card-title">本场成绩</text>
-      <text class="total-score">{{totalStrokes}}</text>
-      <text class="total-label">总杆</text>
-    </view>
-    <button class="btn-primary" bindtap="viewRecord">查看详细记录</button>
+    <text class="icon">✅</text>
+    <text class="title">记录完成！</text>
+    <text class="score-big">{{totalStrokes}}</text>
+    <text class="score-label">总杆</text>
+    <button class="btn" bindtap="viewRecord">查看详情</button>
   </view>
 
-  <view wx:else class="record-page">
+  <view wx:else class="page">
+    <!-- 顶部：球场 + 洞号 + 统计 -->
+    <view class="top-bar">
+      <view class="top-left">
+        <text class="hole-num">H{{currentHole}}</text>
+        <text class="course">{{courseName}}</text>
+        <text class="par">标准杆{{holes[currentHole-1].par}}</text>
+      </view>
+      <view class="top-right">
+        <text class="stat">{{doneCount}}洞</text>
+        <text class="stat">{{totalStrokes}}杆</text>
+      </view>
+    </view>
 
-    <!-- 顶部信息 -->
-    <view class="record-header">
-      <view class="header-left">
-        <view class="hole-badge">H{{currentHole}}</view>
-        <view class="course-info">
-          <text class="course-name">{{courseName}}</text>
-          <text class="hole-progress">第 {{currentHole}} / {{totalHoles}} 洞 · 标准杆{{holes[currentHole-1].par}}</text>
+    <!-- 18洞进度条 -->
+    <view class="holes-bar">
+      <view class="row">
+        <view wx:for="{{holes}}" wx:key="holeNumber" wx:if="{{item.holeNumber <= 9}}"
+          class="hole {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'cur' : ''}}">
+          <text class="h">{{item.holeNumber}}</text>
+          <text class="s">{{item.done ? item.strokes : '-'}}</text>
         </view>
       </view>
-      <view class="header-right">
-        <view class="live-stat">
-          <text class="stat-label">已记</text>
-          <text class="stat-num">{{doneCount}}</text>
-        </view>
-        <view class="live-stat">
-          <text class="stat-label">当前</text>
-          <text class="stat-num">{{strokes}}</text>
-        </view>
-        <view class="live-stat">
-          <text class="stat-label">累计</text>
-          <text class="stat-num">{{totalStrokes}}</text>
+      <view class="row">
+        <view wx:for="{{holes}}" wx:key="holeNumber" wx:if="{{item.holeNumber > 9}}"
+          class="hole {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'cur' : ''}}">
+          <text class="h">{{item.holeNumber}}</text>
+          <text class="s">{{item.done ? item.strokes : '-'}}</text>
         </view>
       </view>
     </view>
 
-    <!-- 18洞概览 -->
-    <view class="holes-overview">
-      <view class="hole-row">
-        <block wx:for="{{holes}}" wx:for-item="hole" wx:key="holeNumber" wx:if="{{hole.holeNumber <= 9}}">
-          <view class="hole-item {{hole.done ? 'done' : ''}} {{currentHole === hole.holeNumber ? 'current' : ''}}">
-            <text class="hole-num">H{{hole.holeNumber}}</text>
-            <text class="hole-par">P{{hole.par}}</text>
-            <text class="hole-score">{{hole.done ? hole.strokes : '-'}}</text>
-          </view>
-        </block>
+    <!-- 输入区 -->
+    <view class="input-area">
+      <!-- 杆数 -->
+      <view class="row-section">
+        <text class="label">杆数</text>
+        <view class="row-input">
+          <view class="btn-sm" data-delta="-1" bindtap="adjustStrokes">-</view>
+          <text class="big-num">{{strokes}}</text>
+          <view class="btn-sm" data-delta="1" bindtap="adjustStrokes">+</view>
+        </view>
       </view>
-      <view class="hole-row">
-        <block wx:for="{{holes}}" wx:for-item="hole" wx:key="holeNumber" wx:if="{{hole.holeNumber > 9}}">
-          <view class="hole-item {{hole.done ? 'done' : ''}} {{currentHole === hole.holeNumber ? 'current' : ''}}">
-            <text class="hole-num">H{{hole.holeNumber}}</text>
-            <text class="hole-par">P{{hole.par}}</text>
-            <text class="hole-score">{{hole.done ? hole.strokes : '-'}}</text>
-          </view>
-        </block>
-      </view>
-    </view>
 
-    <!-- 杆数输入 -->
-    <view class="input-section card">
-      <text class="section-title">杆数</text>
-      <view class="stroke-row">
-        <view class="stroke-btn" data-delta="-1" bindtap="adjustStrokes">−</view>
-        <text class="stroke-num">{{strokes}}</text>
-        <view class="stroke-btn" data-delta="1" bindtap="adjustStrokes">+</view>
+      <!-- 球杆 -->
+      <view class="row-section">
+        <text class="label">球杆</text>
+        <view class="club-row">
+          <view wx:for="{{clubOptions}}" wx:key="id" data-id="{{item.id}}" bindtap="toggleClub"
+            class="club-tag {{isClubSelected(item.id) ? 'sel' : ''}}">{{item.name}}</view>
+        </view>
       </view>
-      <view class="quick-row">
-        <view wx:for="{{[1,2,3,4,5,6,7,8,9]}}" wx:key="*this" data-val="{{item}}" bindtap="adjustStrokes" class="quick-btn {{strokes === item ? 'active' : ''}}">{{item}}</view>
-      </view>
-    </view>
 
-    <!-- 球杆选择 -->
-    <view class="input-section card">
-      <text class="section-title">使用球杆</text>
-      <text class="section-hint">（可多选）</text>
-      <view class="club-list">
-        <block wx:for="{{clubOptions}}" wx:key="id">
-          <view class="club-row" data-id="{{item.id}}" bindtap="toggleClub">
-            <view class="club-check {{selectedClubs.indexOf(item.id) >= 0 ? 'checked' : ''}}">
-              <text wx:if="{{selectedClubs.indexOf(item.id) >= 0}}">✓</text>
-            </view>
-            <text class="club-name">{{item.name}}</text>
-          </view>
-        </block>
+      <!-- 推杆 -->
+      <view class="row-section">
+        <text class="label">推杆</text>
+        <view class="row-input">
+          <view class="btn-sm" data-delta="-1" bindtap="adjustPutts">-</view>
+          <text class="mid-num">{{putts}}</text>
+          <view class="btn-sm" data-delta="1" bindtap="adjustPutts">+</view>
+        </view>
       </view>
-    </view>
 
-    <!-- 推杆数 -->
-    <view class="input-section card">
-      <text class="section-title">推杆数</text>
-      <view class="putt-row">
-        <view class="stroke-btn small" data-delta="-1" bindtap="adjustPutts">−</view>
-        <text class="putt-num">{{putts}}</text>
-        <view class="stroke-btn small" data-delta="1" bindtap="adjustPutts">+</view>
+      <!-- 备注 -->
+      <view class="row-section">
+        <input class="note" placeholder="备注（OB/下水）" value="{{note}}" bindinput="onNoteInput" />
       </view>
-    </view>
-
-    <!-- 备注 -->
-    <view class="input-section card">
-      <text class="section-title">备注（选填）</text>
-      <input class="note-input" placeholder="OB/下水/一切进洞..." value="{{note}}" bindinput="onNoteInput" />
     </view>
 
     <!-- 确认按钮 -->
-    <button class="btn-confirm" bindtap="confirmHole">{{currentHole >= 18 ? '完成记录' : '确认，下一洞'}}</button>
+    <button class="confirm-btn" bindtap="confirmHole">
+      {{currentHole >= 18 ? '完成' : '下一洞 →'}}
+    </button>
   </view>
 </view>
