@@ -50,13 +50,29 @@
 
     <!-- 18洞进度条 + 杆数显示 -->
     <view class="holes-overview">
-      <view 
-        wx:for="{{holes}}" 
-        wx:key="holeNumber"
-        class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
-      >
-        <text class="hole-num">{{item.holeNumber}}</text>
-        <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
+      <!-- 第1排：1-9洞 -->
+      <view class="hole-row">
+        <view 
+          wx:for="{{holes}}" 
+          wx:key="holeNumber"
+          wx:if="{{item.holeNumber <= 9}}"
+          class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
+        >
+          <text class="hole-num">{{item.holeNumber}}</text>
+          <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
+        </view>
+      </view>
+      <!-- 第2排：10-18洞 -->
+      <view class="hole-row">
+        <view 
+          wx:for="{{holes}}" 
+          wx:key="holeNumber"
+          wx:if="{{item.holeNumber > 9}}"
+          class="hole-item {{item.done ? 'done' : ''}} {{currentHole === item.holeNumber ? 'current' : ''}}"
+        >
+          <text class="hole-num">{{item.holeNumber}}</text>
+          <text class="hole-score">{{item.done ? item.strokes : '-'}}</text>
+        </view>
       </view>
     </view>
 

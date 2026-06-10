@@ -72,20 +72,27 @@
   display: block;
 }
 
-/* 18洞概览 */
+/* 18洞概览（两排） */
 .holes-overview {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8rpx;
-  padding: 20rpx 24rpx;
+  padding: 16rpx 24rpx;
   background: #FFF;
   border-bottom: 1rpx solid #F0F0F0;
 }
 
+.hole-row {
+  display: flex;
+  gap: 8rpx;
+  margin-bottom: 8rpx;
+}
+
+.hole-row:last-child {
+  margin-bottom: 0;
+}
+
 .hole-item {
-  width: calc(100% / 6 - 6rpx);
+  flex: 1;
   text-align: center;
-  padding: 10rpx 0;
+  padding: 12rpx 0;
   background: #F5F5F5;
   border-radius: 8rpx;
   border: 2rpx solid transparent;
