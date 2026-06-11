@@ -1,5 +1,5 @@
 // pages/caddie/caddie.js
-// 球童端 - 按杆数逐杆选球杆
+// 球童端 - 逐杆记录：每杆选球杆+标记推杆
 const CLUB_OPTIONS = [
   { id: 'driver', name: '1号木' },
   { id: 'wood3', name: '3号木' },
@@ -24,18 +24,15 @@ Page({
     courseName: '未知球场',
     currentHole: 1,
     totalHoles: 18,
-    strokes: 4,
-    putts: 2,
-    note: '',
     holes: [],
     isCompleted: false,
     totalStrokes: 0,
     doneCount: 0,
     clubOptions: CLUB_OPTIONS,
-    // 当前击球进度
-    currentStroke: 1,        // 第几杆
-    strokeClubs: [],        // 每杆对应的球杆 ['driver','iron7','pw','putter']
-    selectedClub: ''        // 当前选中的球杆
+    // 当前击球记录
+    strokes: [],           // [{club: 'driver', isPutt: false}, ...]
+    currentStroke: 1,     // 第几杆（1-based）
+    selectedClub: ''       // 当前选中的球杆
   },
 
   onLoad(options) {
@@ -65,9 +62,9 @@ Page({
     const holes = []
     for (let i = 0; i < 18; i++) {
       const par = coursePars && coursePars[i] ? coursePars[i] : defaultPars[i]
-      holes.push({ holeNumber: i + 1, par, strokes: 0, clubs: [], putts: 0, note: '', done: false })
+      holes.push({ holeNumber: i + 1, par, strokes: [], done: false })
     }
-    this.setData({ holes, strokes: 4, currentStroke: 1, strokeClubs: [], selectedClub: '' })
+    this.setData({ holes, strokes: [], currentStroke: 1, selectedClub: '' })
   },
 
   loadRoomData() {
@@ -78,71 +75,64 @@ Page({
     this.setData({ loading: false })
   },
 
-  // 杆数调整
-  adjustStrokes(e) {
-    const delta = parseInt(e.currentTarget.dataset.delta)
-    const val = Math.max(1, Math.min(15, this.data.strokes + delta))
-    this.setData({ strokes: val, currentStroke: 1, strokeClubs: [], selectedClub: '' })
-  },
-
-  // 推杆数
-  adjustPutts(e) {
-    const delta = parseInt(e.currentTarget.dataset.delta)
-    const val = Math.max(0, Math.min(10, this.data.putts + delta))
-    this.setData({ putts: val })
-  },
-
-  // 选择球杆（逐杆记录）
+  // 选择球杆
   selectClub(e) {
     const clubId = e.currentTarget.dataset.id
     this.setData({ selectedClub: clubId })
   },
 
-  // 确认这一杆
-  confirmStroke() {
+  // 确认这一杆（标记是否推杆）
+  confirmStroke(e) {
     if (!this.data.selectedClub) {
       wx.showToast({ title: '请先选择球杆', icon: 'none' })
       return
     }
-    const clubs = [...this.data.strokeClubs, this.data.selectedClub]
-    
-    if (clubs.length >= this.data.strokes) {
-      // 杆数够了，显示推杆+备注界面
-      this.setData({ strokeClubs: clubs, selectedClub: '', currentStroke: clubs.length + 1 })
-    } else {
-      // 继续下一杆
-      this.setData({ strokeClubs: clubs, selectedClub: '', currentStroke: clubs.length + 1 })
-    }
+    const isPutt = e.currentTarget.dataset.putt === 'true'
+    const strokes = [...this.data.strokes, {
+      club: this.data.selectedClub,
+      isPutt: isPutt
+    }]
+    this.setData({ strokes, selectedClub: '', currentStroke: strokes.length + 1 })
   },
 
-  // 备注
-  onNoteInput(e) {
-    this.setData({ note: e.detail.value })
+  // 标记为推杆并确认
+  confirmAsPutt() {
+    this.confirmStroke({ currentTarget: { dataset: { putt: 'true' } } })
   },
 
-  // 确认当前洞（最终保存）
+  // 标记为击球并确认
+  confirmAsShot() {
+    this.confirmStroke({ currentTarget: { dataset: { putt: 'false' } } })
+  },
+
+  // 删除最后一杆
+  removeLastStroke() {
+    if (this.data.strokes.length === 0) return
+    const strokes = this.data.strokes.slice(0, -1)
+    this.setData({ strokes, currentStroke: strokes.length + 1 })
+  },
+
+  // 确认当前洞
   confirmHole() {
+    if (this.data.strokes.length === 0) {
+      wx.showToast({ title: '请先记录至少一杆', icon: 'none' })
+      return
+    }
+    
     const idx = this.data.currentHole - 1
     const holes = [...this.data.holes]
     
-    // 整理球杆名称
-    const clubNames = this.data.strokeClubs.map(id => {
-      const c = CLUB_OPTIONS.find(c => c.id === id)
-      return c ? c.name : ''
-    })
-
     holes[idx] = {
       holeNumber: this.data.currentHole,
       par: holes[idx].par,
-      strokes: this.data.strokes,
-      clubs: clubNames,
-      putts: this.data.putts,
-      note: this.data.note,
+      strokes: [...this.data.strokes],
       done: true
     }
 
     const doneCount = holes.filter(h => h.done).length
-    const totalStrokes = holes.reduce((s, h) => s + (h.strokes || 0), 0)
+    const totalStrokes = holes.reduce((s, h) => {
+      return s + (h.done ? h.strokes.length : 0)
+    }, 0)
 
     if (this.data.currentHole >= 18) {
       this.setData({ holes, isCompleted: true, totalStrokes, doneCount })
@@ -154,12 +144,9 @@ Page({
     this.setData({
       holes,
       currentHole: this.data.currentHole + 1,
-      strokes: 4,
+      strokes: [],
       currentStroke: 1,
-      strokeClubs: [],
       selectedClub: '',
-      putts: 2,
-      note: '',
       doneCount,
       totalStrokes
     })
@@ -167,50 +154,32 @@ Page({
 
   // 修改上一洞
   editLastHole() {
-    if (this.data.currentHole <= 1) {
-      wx.showToast({ title: '没有上一洞', icon: 'none' })
-      return
-    }
+    if (this.data.currentHole <= 1) return
     const prevIdx = this.data.currentHole - 2
     const holes = [...this.data.holes]
-    const prevHole = holes[prevIdx]
-    
+    holes[prevIdx].done = false
     this.setData({
       currentHole: this.data.currentHole - 1,
-      strokes: prevHole.strokes || 4,
-      strokeClubs: [],
+      strokes: [],
       selectedClub: '',
-      putts: prevHole.putts || 2,
-      note: prevHole.note || ''
+      currentStroke: 1,
+      holes
     })
-    
-    // 清除这一洞的记录
-    holes[prevIdx].done = false
-    this.setData({ holes })
   },
 
   // 修改指定洞
   editHole(e) {
     const holeNum = parseInt(e.currentTarget.dataset.hole)
-    if (holeNum > this.data.currentHole) {
-      wx.showToast({ title: '还未记录此洞', icon: 'none' })
-      return
-    }
     const idx = holeNum - 1
     const holes = [...this.data.holes]
-    const h = holes[idx]
-    
+    holes[idx].done = false
     this.setData({
       currentHole: holeNum,
-      strokes: h.strokes || 4,
-      strokeClubs: [],
+      strokes: [],
       selectedClub: '',
-      putts: h.putts || 2,
-      note: h.note || ''
+      currentStroke: 1,
+      holes
     })
-    
-    holes[idx].done = false
-    this.setData({ holes })
   },
 
   saveToCloud() {

@@ -35,7 +35,7 @@
           data-hole="{{item.holeNumber}}" bindtap="editHole">
           <text class="h">H{{item.holeNumber}}</text>
           <text class="p">P{{item.par}}</text>
-          <text class="s">{{item.done ? item.strokes : '-'}}</text>
+          <text class="s">{{item.done ? item.strokes.length : '-'}}</text>
         </view>
       </view>
       <view class="row">
@@ -44,76 +44,55 @@
           data-hole="{{item.holeNumber}}" bindtap="editHole">
           <text class="h">H{{item.holeNumber}}</text>
           <text class="p">P{{item.par}}</text>
-          <text class="s">{{item.done ? item.strokes : '-'}}</text>
+          <text class="s">{{item.done ? item.strokes.length : '-'}}</text>
         </view>
       </view>
     </view>
 
-    <!-- 已选球杆记录 -->
-    <view class="club-record" wx:if="{{strokeClubs.length > 0}}">
-      <text class="record-title">已记录：</text>
-      <view wx:for="{{strokeClubs}}" wx:key="*this" class="record-item">{{index + 1}}. {{item}}</view>
+    <!-- 已记录的杆 -->
+    <view class="stroke-record" wx:if="{{strokes.length > 0}}">
+      <text class="record-label">已记：</text>
+      <view wx:for="{{strokes}}" wx:key="*this" class="record-row">
+        <text class="stroke-num">{{index + 1}}</text>
+        <text class="stroke-club {{item.isPutt ? 'putt' : ''}}">{{item.club}}</text>
+        <text class="stroke-type">{{item.isPutt ? '推' : '击'}}</text>
+      </view>
     </view>
 
-    <!-- 输入区 -->
-    <view class="input-area">
-      <!-- 当前杆数进度 -->
-      <view class="stroke-progress">
-        <text class="prog-text">第 {{strokeClubs.length + 1}} 杆 / 共 {{strokes}} 杆</text>
-        <view class="prog-dots">
-          <view wx:for="{{strokes}}" wx:key="*this" class="dot {{index < strokeClubs.length ? 'filled' : ''}}"></view>
-        </view>
-      </view>
+    <!-- 当前杆数显示 -->
+    <view class="current-strokes">
+      <text class="cur-text">第 {{strokes.length + 1}} 杆</text>
+    </view>
 
-      <!-- 杆数调整 -->
-      <view class="row-section">
-        <text class="label">本洞杆数</text>
-        <view class="row-input">
-          <view class="btn-sm" data-delta="-1" bindtap="adjustStrokes">-</view>
-          <text class="big-num">{{strokes}}</text>
-          <view class="btn-sm" data-delta="1" bindtap="adjustStrokes">+</view>
-        </view>
+    <!-- 球杆选择 -->
+    <view class="club-section">
+      <text class="label">选择球杆</text>
+      <view class="club-row">
+        <view wx:for="{{clubOptions}}" wx:key="id" data-id="{{item.id}}" bindtap="selectClub"
+          class="club-tag {{selectedClub === item.id ? 'sel' : ''}}">{{item.name}}</view>
       </view>
+    </view>
 
-      <!-- 球杆选择 -->
-      <view class="row-section">
-        <text class="label">选择球杆</text>
-        <view class="club-row">
-          <view wx:for="{{clubOptions}}" wx:key="id" data-id="{{item.id}}" bindtap="selectClub"
-            class="club-tag {{selectedClub === item.id ? 'sel' : ''}}">{{item.name}}</view>
-        </view>
+    <!-- 确认按钮 -->
+    <view class="confirm-section">
+      <view class="confirm-btns" wx:if="{{selectedClub}}">
+        <button class="btn-shot" data-putt="false" bindtap="confirmAsShot">击球确认</button>
+        <button class="btn-putt" data-putt="true" bindtap="confirmAsPutt">推杆确认</button>
       </view>
+      <button class="btn-remove" bindtap="removeLastStroke" wx:if="{{strokes.length > 0}}">撤销上一杆</button>
+    </view>
 
-      <!-- 确认这一杆 -->
-      <view class="stroke-confirm" wx:if="{{strokeClubs.length < strokes}}">
-        <button class="confirm-stroke-btn" bindtap="confirmStroke" disabled="{{!selectedClub}}">
-          确认第 {{strokeClubs.length + 1}} 杆
+    <!-- 底部：完成本洞 -->
+    <view class="bottom-area" wx:if="{{strokes.length > 0}}">
+      <view class="hole-summary">
+        <text class="summary-text">本洞：{{strokes.length}} 杆</text>
+      </view>
+      <view class="bottom-btns">
+        <button class="btn-prev" bindtap="editLastHole" wx:if="{{currentHole > 1}}">← 上一洞</button>
+        <button class="btn-confirm" bindtap="confirmHole">
+          {{currentHole >= 18 ? '完成' : '下一洞 →'}}
         </button>
       </view>
-
-      <!-- 推杆+备注（杆数够了后显示） -->
-      <block wx:if="{{strokeClubs.length >= strokes}}">
-        <view class="row-section">
-          <text class="label">推杆数</text>
-          <view class="row-input">
-            <view class="btn-sm" data-delta="-1" bindtap="adjustPutts">-</view>
-            <text class="mid-num">{{putts}}</text>
-            <view class="btn-sm" data-delta="1" bindtap="adjustPutts">+</view>
-          </view>
-        </view>
-
-        <view class="row-section">
-          <input class="note" placeholder="备注（OB/下水/一切...）" value="{{note}}" bindinput="onNoteInput" />
-        </view>
-      </block>
-    </view>
-
-    <!-- 底部按钮 -->
-    <view class="bottom-btns">
-      <button class="btn-edit" bindtap="editLastHole" wx:if="{{currentHole > 1}}">← 上一洞</button>
-      <button class="confirm-btn" bindtap="confirmHole" wx:if="{{strokeClubs.length >= strokes}}">
-        {{currentHole >= 18 ? '完成记录' : '确认，下一洞 →'}}
-      </button>
     </view>
   </view>
 </view>
