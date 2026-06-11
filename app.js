@@ -10,7 +10,7 @@ App({
         name: '上海天马高尔夫',
         type: 'combo',  // 组合型：选2个9洞组成18洞
         combos: [
-          { id: 'laojiuchang', name: '老球场', pars: [4,5,3,4,4,5,3,4,4] },
+          { id: 'laojiuchang', name: '老球场', pars: [4,5,3,4,4,4,5,3,4] },
           { id: 'xinqiuchang', name: '新球场', pars: [4,4,5,4,3,5,4,3,4] },
           { id: 'tianmachang', name: '天马场', pars: [4,4,4,4,3,5,4,3,5] }
         ]
