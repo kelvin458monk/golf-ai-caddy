@@ -2,78 +2,107 @@
 <view class="container">
 
   <!-- 步骤1：选择球场 -->
-  <view wx:if="{{step === 'select_course'}}" class="step-panel">
-    <view class="step-header">
-      <text class="step-title">🏌️ 开新球局</text>
-      <text class="step-desc">选择今天打球的球场</text>
+  <view wx:if="{{step === 'select_course'}}" class="page">
+    <view class="header">
+      <text class="title">选择球场</text>
+      <text class="subtitle">选择你要打的球场</text>
     </view>
 
     <view class="course-list">
       <view 
         wx:for="{{courses}}" 
         wx:key="id"
-        class="course-card card {{selectedCourse && selectedCourse.id === item.id ? 'selected' : ''}}"
-        bindtap="selectCourse"
+        class="course-card {{selectedCourse && selectedCourse.id === item.id ? 'selected' : ''}}"
         data-id="{{item.id}}"
+        bindtap="selectCourse"
       >
-        <view class="course-info">
+        <view class="card-left">
           <text class="course-name">{{item.name}}</text>
-          <text class="course-detail">{{item.holes}}洞 · 标准杆{{item.par}}</text>
+          <text class="course-info" wx:if="{{item.type === 'combo'}}">27洞（选2个9洞组18洞）</text>
+          <text class="course-info" wx:else>{{item.holes}}洞 · 标准杆{{item.par}}</text>
         </view>
-        <view wx:if="{{selectedCourse && selectedCourse.id === item.id}}" class="check-icon">✓</view>
+        <view class="card-arrow" wx:if="{{selectedCourse && selectedCourse.id === item.id}}">✓</view>
       </view>
     </view>
 
-    <button class="btn-primary" bindtap="confirmCourse">下一步</button>
+    <button class="btn-primary" bindtap="confirmCourse" disabled="{{!selectedCourse}}">
+      下一步
+    </button>
+  </view>
+
+  <!-- 天马专用：选择2个9洞 -->
+  <view wx:elif="{{step === 'tianma_combo'}}" class="page">
+    <view class="header">
+      <text class="title">选择2个9洞</text>
+      <text class="subtitle">天马由3个9洞组成，请选择2个</text>
+    </view>
+
+    <view class="combo-list">
+      <view 
+        wx:for="{{tianmaCombos}}" 
+        wx:key="id"
+        class="combo-card {{selectedCombos.indexOf(item.id) >= 0 ? 'selected' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="toggleCombo"
+      >
+        <text class="combo-name">{{item.name}}</text>
+        <text class="combo-par">标准杆：{{item.pars}}</text>
+      </view>
+    </view>
+
+    <view class="selected-info" wx:if="{{selectedCombos.length > 0}}">
+      <text class="info-text">已选 {{selectedCombos.length}}/2 个9洞</text>
+    </view>
+
+    <view class="btn-group">
+      <button class="btn-back" bindtap="backToSelect">返回</button>
+      <button class="btn-primary" bindtap="confirmTianma" disabled="{{selectedCombos.length !== 2}}">
+        确认（{{selectedCombos.length}}/2）
+      </button>
+    </view>
   </view>
 
   <!-- 步骤2：选择记录方式 -->
-  <view wx:elif="{{step === 'select_recorder'}}" class="step-panel">
-    <view class="step-header">
-      <text class="step-title">📝 谁来记录？</text>
-      <text class="step-desc">{{selectedCourse.name}}</text>
+  <view wx:elif="{{step === 'select_recorder'}}" class="page">
+    <view class="header">
+      <text class="title">选择记录方式</text>
+      <text class="subtitle">{{selectedCourse.name}}</text>
     </view>
 
-    <view class="choice-list">
-      <view class="choice-card card" bindtap="useCaddie">
-        <text class="choice-icon">🏌️</text>
-        <text class="choice-title">球童扫码记录</text>
-        <text class="choice-desc">生成二维码，让球童扫码后帮你记录</text>
+    <view class="mode-cards">
+      <view class="mode-card" bindtap="useCaddie">
+        <text class="mode-icon">🏌️</text>
+        <text class="mode-title">球童扫码记录</text>
+        <text class="mode-desc">生成二维码，球童扫码帮你记录每一杆</text>
       </view>
-      <view class="choice-card card" bindtap="useSelf">
-        <text class="choice-icon">🎯</text>
-        <text class="choice-title">我自己记录</text>
-        <text class="choice-desc">直接开始记录成绩</text>
+
+      <view class="mode-card" bindtap="useSelf">
+        <text class="mode-icon">📝</text>
+        <text class="mode-title">自己记录</text>
+        <text class="mode-desc">自己录入每一杆的球杆和成绩</text>
       </view>
     </view>
 
-    <button class="btn-back" bindtap="backToSelect">返回选择球场</button>
+    <button class="btn-back" bindtap="backToSelect">重新选择</button>
   </view>
 
-  <!-- 步骤3：二维码 -->
-  <view wx:elif="{{step === 'qr_code'}}" class="step-panel">
+  <!-- 步骤3：显示二维码 -->
+  <view wx:elif="{{step === 'qr_code'}}" class="page qr-page">
     <view class="qr-header">
-      <text class="qr-title">⛳ 球局已开启</text>
-      <text class="qr-course">{{selectedCourse.name}}</text>
+      <text class="qr-title">球童扫码记录</text>
+      <text class="qr-subtitle">{{selectedCourse.name}}</text>
     </view>
 
-    <view class="qr-area card">
-      <view class="qr-box">
-        <text class="qr-hint">让球童扫码</text>
-        <text class="qr-roomid">{{roomId}}</text>
-      </view>
-    </view>
-
-    <view class="qr-tips">
-      <text class="tip-item">📱 球童打开微信扫一扫</text>
-      <text class="tip-item">📝 扫码后直接记录成绩</text>
-      <text class="tip-item">✅ 完成后您可扫码查看报告</text>
+    <view class="qr-box">
+      <text class="qr-placeholder">二维码生成中...</text>
+      <text class="room-id">房间号：{{roomId}}</text>
     </view>
 
     <view class="qr-actions">
-      <button class="btn-secondary" bindtap="reselect">重新选择</button>
+      <button class="btn-secondary" bindtap="copyRoomId">复制房间号</button>
       <button class="btn-primary" bindtap="goReport">查看报告</button>
     </view>
-  </view>
 
+    <button class="btn-back" bindtap="reselect">重新选择</button>
+  </view>
 </view>

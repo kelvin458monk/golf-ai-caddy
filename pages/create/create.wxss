@@ -1,67 +1,122 @@
 /* pages/create/create.wxss */
 
-.step-header {
-  text-align: center;
-  padding: 40rpx 0;
+.container {
+  min-height: 100vh;
+  background: #F5F5F5;
 }
 
-.step-title {
-  font-size: 44rpx;
+.page {
+  padding: 30rpx;
+}
+
+/* 头部 */
+.header {
+  margin-bottom: 40rpx;
+}
+
+.title {
+  font-size: 40rpx;
   font-weight: 700;
   color: #333;
   display: block;
+  margin-bottom: 8rpx;
 }
 
-.step-desc {
+.subtitle {
   font-size: 26rpx;
   color: #999;
-  margin-top: 10rpx;
   display: block;
 }
 
-/* 球场选择 */
+/* 球场列表 */
 .course-list {
-  padding: 0 24rpx;
+  margin-bottom: 40rpx;
 }
 
 .course-card {
+  background: #FFF;
+  padding: 28rpx 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 16rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16rpx;
+  border: 2rpx solid transparent;
 }
 
 .course-card.selected {
-  border: 2rpx solid #1B8A6B;
-  background: #F8FFF9;
+  border-color: #1B8A6B;
+  background: #F0FFF8;
 }
 
-.course-info {
-  flex: 1;
+.card-left {
+  display: flex;
+  flex-direction: column;
 }
 
 .course-name {
-  font-size: 32rpx;
+  font-size: 30rpx;
   font-weight: 600;
   color: #333;
   display: block;
+  margin-bottom: 6rpx;
 }
 
-.course-detail {
-  font-size: 24rpx;
+.course-info {
+  font-size: 22rpx;
   color: #999;
-  display: block;
-  margin-top: 6rpx;
 }
 
-.check-icon {
-  font-size: 40rpx;
+.card-arrow {
+  font-size: 36rpx;
   color: #1B8A6B;
   font-weight: 700;
 }
 
+/* 天马组合选择 */
+.combo-list {
+  margin-bottom: 30rpx;
+}
+
+.combo-card {
+  background: #FFF;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 16rpx;
+  border: 2rpx solid transparent;
+}
+
+.combo-card.selected {
+  border-color: #1B8A6B;
+  background: #F0FFF8;
+}
+
+.combo-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.combo-par {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.selected-info {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.info-text {
+  font-size: 28rpx;
+  color: #1B8A6B;
+  font-weight: 600;
+}
+
+/* 按钮通用 */
 .btn-primary {
-  margin: 30rpx 24rpx;
   background: linear-gradient(135deg, #1B8A6B, #2ECC71);
   color: #FFF;
   border-radius: 50rpx;
@@ -69,75 +124,84 @@
   font-size: 32rpx;
   font-weight: 600;
   border: none;
-  text-align: center;
+  width: 100%;
 }
 
-.btn-primary:active { opacity: 0.85; }
+.btn-primary[disabled] {
+  background: #CCC;
+  color: #FFF;
+}
 
-.btn-secondary {
-  background: #F5F5F5;
+.btn-back {
+  background: #FFF;
   color: #666;
+  border: 2rpx solid #DDD;
   border-radius: 50rpx;
   padding: 24rpx;
   font-size: 28rpx;
+  font-weight: 600;
   border: none;
-  text-align: center;
+  margin-bottom: 16rpx;
 }
 
-.btn-secondary:active { opacity: 0.85; }
-
-.btn-back {
-  margin: 20rpx 24rpx;
-  background: none;
-  color: #999;
-  font-size: 26rpx;
-  border: none;
-  text-align: center;
-}
-
-/* 记录方式选择 */
-.choice-list {
-  padding: 0 24rpx;
-}
-
-.choice-card {
-  padding: 40rpx 30rpx;
-  margin-bottom: 20rpx;
+.btn-group {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 16rpx;
 }
 
-.choice-card:active {
-  background: #F8FFF9;
-  transform: scale(0.98);
+.btn-group .btn-back {
+  flex: 1;
+  margin-bottom: 0;
 }
 
-.choice-icon {
+.btn-group .btn-primary {
+  flex: 2;
+}
+
+/* 记录方式 */
+.mode-cards {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.mode-card {
+  flex: 1;
+  background: #FFF;
+  padding: 40rpx 24rpx;
+  border-radius: 20rpx;
+  text-align: center;
+  border: 2rpx solid #EEE;
+}
+
+.mode-icon {
   font-size: 60rpx;
   display: block;
   margin-bottom: 16rpx;
 }
 
-.choice-title {
-  font-size: 34rpx;
-  font-weight: 600;
+.mode-title {
+  font-size: 30rpx;
+  font-weight: 700;
   color: #333;
   display: block;
-  margin-bottom: 8rpx;
+  margin-bottom: 10rpx;
 }
 
-.choice-desc {
-  font-size: 24rpx;
+.mode-desc {
+  font-size: 22rpx;
   color: #999;
-  text-align: center;
   display: block;
 }
 
 /* 二维码页 */
-.qr-header {
+.qr-page {
   text-align: center;
-  padding: 40rpx 0 20rpx;
+  padding: 60rpx 30rpx;
+}
+
+.qr-header {
+  margin-bottom: 40rpx;
 }
 
 .qr-title {
@@ -145,60 +209,49 @@
   font-weight: 700;
   color: #333;
   display: block;
+  margin-bottom: 8rpx;
 }
 
-.qr-course {
-  font-size: 28rpx;
+.qr-subtitle {
+  font-size: 26rpx;
   color: #999;
   display: block;
-  margin-top: 8rpx;
-}
-
-.qr-area {
-  margin: 30rpx 24rpx;
-  padding: 40rpx;
-  text-align: center;
 }
 
 .qr-box {
   background: #FFF;
-  border: 4rpx dashed #1B8A6B;
+  padding: 60rpx;
   border-radius: 20rpx;
-  padding: 60rpx 40rpx;
-}
-
-.qr-hint {
-  font-size: 28rpx;
-  color: #999;
-  display: block;
-  margin-bottom: 16rpx;
-}
-
-.qr-roomid {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #1B8A6B;
-  word-break: break-all;
-  display: block;
-}
-
-.qr-tips {
-  padding: 0 40rpx;
   margin-bottom: 30rpx;
 }
 
-.tip-item {
-  font-size: 26rpx;
-  color: #666;
+.qr-placeholder {
+  font-size: 28rpx;
+  color: #CCC;
   display: block;
-  margin-bottom: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.room-id {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
 }
 
 .qr-actions {
   display: flex;
-  gap: 20rpx;
-  padding: 0 24rpx;
+  gap: 16rpx;
+  margin-bottom: 30rpx;
 }
 
-.qr-actions .btn-secondary { flex: 1; }
-.qr-actions .btn-primary { flex: 2; }
+.btn-secondary {
+  flex: 1;
+  background: #FFF;
+  color: #666;
+  border: 2rpx solid #DDD;
+  border-radius: 50rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  border: none;
+}
